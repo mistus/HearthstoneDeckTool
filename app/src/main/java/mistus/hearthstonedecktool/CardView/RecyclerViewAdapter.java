@@ -1,12 +1,19 @@
 package mistus.hearthstonedecktool.CardView;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import mistus.hearthstonedecktool.R;
+import mistus.hearthstonedecktool.Ｄatabase.DeckToolDatabaseHelper;
+
+import static java.security.AccessController.getContext;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
@@ -30,12 +37,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.job = job;
         this.isStandardType = isStandardType;
         this.Quantity = Quantity;
-
-        Log.e("System", "CheckStart");
-        for (int i: deckId) {
-            Log.e("i=", Integer.toString(i));
-        }
-
+//        Log.e("System", "CheckStart");
+//        for (int i: deckId) {
+//            Log.e("i=", Integer.toString(i));
+//        }
     }
 
     @Override
@@ -49,6 +54,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
+        TextView textView = (TextView)cardView.findViewById(R.id.deckName);
+        textView.setText(deckName[position]);
         // TextView textView = (TextView)cardView.findViewById(R.id.act52);
         // textView.setText("666666666");
     }
