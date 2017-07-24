@@ -1,4 +1,4 @@
-package mistus.hearthstonedecktool.Ｄatabase;
+package mistus.hearthstonedecktool.Database;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;

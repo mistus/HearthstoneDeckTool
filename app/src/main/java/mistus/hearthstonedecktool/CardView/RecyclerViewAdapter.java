@@ -1,19 +1,12 @@
 package mistus.hearthstonedecktool.CardView;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import mistus.hearthstonedecktool.R;
-import mistus.hearthstonedecktool.Ｄatabase.DeckToolDatabaseHelper;
-
-import static java.security.AccessController.getContext;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
