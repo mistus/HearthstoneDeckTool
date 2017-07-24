@@ -11,7 +11,7 @@ import android.util.Log;
 
 import mistus.hearthstonedecktool.CardView.RecyclerViewAdapter;
 import mistus.hearthstonedecktool.R;
-import mistus.hearthstonedecktool.Ｄatabase.DeckToolDatabaseHelper;
+import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
 
 public class DeckListActivity extends AppCompatActivity {
 
