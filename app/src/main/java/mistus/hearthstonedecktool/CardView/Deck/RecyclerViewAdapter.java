@@ -1,4 +1,4 @@
-package mistus.hearthstonedecktool.CardView;
+package mistus.hearthstonedecktool.CardView.Deck;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

@@ -24,9 +24,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="Button"
+        android:text="新增卡組"
+        android:id="@+id/add_deck_button"
         android:layout_alignParentBottom="true"/>
-
 
 </RelativeLayout>
 

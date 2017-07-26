@@ -1,8 +1,15 @@
 package mistus.hearthstonedecktool.Activity;
 
-/**
- * Created by msi-1 on 2017/7/17.
- */
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-public class DeckEditActivity {
+import mistus.hearthstonedecktool.R;
+
+public class DeckEditActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_deck_edit_layout);
+    }
 }

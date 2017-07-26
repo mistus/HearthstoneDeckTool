@@ -1,4 +1,4 @@
-package mistus.hearthstonedecktool.CardView;
+package mistus.hearthstonedecktool.CardView.Deck;
 
 public class Deck {
 
