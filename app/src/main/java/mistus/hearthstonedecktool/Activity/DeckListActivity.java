@@ -14,13 +14,11 @@ import mistus.hearthstonedecktool.R;
 
 public class DeckListActivity extends AppCompatActivity {
 
-    //RecyclerView
     private RecyclerView DeckRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //auto
-        Log.e("System", "CreateStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_list);
 
@@ -30,10 +28,8 @@ public class DeckListActivity extends AppCompatActivity {
         Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(DeckListActivity.this, DeckEditActivity.class);
                 Intent intent = new Intent();
                 intent.setClass(DeckListActivity.this,DeckEditActivity.class);
-//                startActivity(intent);
                 startActivity(intent);
             }
         });
@@ -50,6 +46,5 @@ public class DeckListActivity extends AppCompatActivity {
         DeckRecycler.setLayoutManager(layoutManager);
         DeckRecycler.setAdapter(adapter);
 
-        Log.e("System", "CreateEnd");
     }
 }
