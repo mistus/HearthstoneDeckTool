@@ -35,8 +35,4 @@ public class DeckToolDatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-
-
-
-
 }

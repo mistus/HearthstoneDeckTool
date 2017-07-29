@@ -28,7 +28,6 @@ public class DeckEditActivity extends AppCompatActivity {
 
         _createCards();
 
-
     }
 
     private void _createCards(){
@@ -36,6 +35,7 @@ public class DeckEditActivity extends AppCompatActivity {
 
         SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this);
         SQLiteDatabase DB = DeckToolDatabaseHelper.getReadableDatabase();
+        //TODO change SQL
         Cursor cursor = DB.rawQuery("select * from card",null);
         int count = cursor.getCount();
         int[] ids = new int[count] ;

@@ -14,6 +14,7 @@ public class insertDefaultDataCardWarrior {
     }
 
     public void insertDefaultData(){
+        //TODO 種族
         //ID職業星數編號, Leve, Job, Description, Type, series
         //Level0
         insert(10001, "心靈之怒",         0, Common.warrior, "對一個手下造成一點傷害，它獲得+2攻擊力",                       "普通", "經典");

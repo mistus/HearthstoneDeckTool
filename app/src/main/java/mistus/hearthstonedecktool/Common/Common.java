@@ -11,4 +11,6 @@ public class Common {
     public static final int warlock = 7;
     public static final int mage = 8;
     public static final int priest = 9;
+
+    //TODO add card level
 }
