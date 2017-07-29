@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import mistus.hearthstonedecktool.CardView.Card.CardRecycleViewAdapter;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
 import mistus.hearthstonedecktool.R;
@@ -16,7 +18,9 @@ import mistus.hearthstonedecktool.R;
 public class DeckEditActivity extends AppCompatActivity {
 
     private RecyclerView cardRecyclerView;
-
+    private String deckName;
+    private ArrayList cardList;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
