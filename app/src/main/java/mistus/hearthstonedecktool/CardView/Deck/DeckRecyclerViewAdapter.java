@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import mistus.hearthstonedecktool.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerViewAdapter.ViewHolder>{
 
     private int deckId[];
     private String deckName[];
@@ -24,7 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(int[] deckId, String[] deckName, int[] job, boolean[] isStandardType, int[] Quantity){
+    public DeckRecyclerViewAdapter(int[] deckId, String[] deckName, int[] job, boolean[] isStandardType, int[] Quantity){
         this.deckId = deckId;
         this.deckName = deckName;
         this.job = job;
@@ -33,7 +33,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DeckRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.cardview_deck, parent, false);

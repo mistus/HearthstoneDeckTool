@@ -5,11 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import mistus.hearthstonedecktool.CardView.Deck.RecyclerViewAdapter;
+import mistus.hearthstonedecktool.CardView.Deck.DeckRecyclerViewAdapter;
 import mistus.hearthstonedecktool.R;
 
 public class DeckListActivity extends AppCompatActivity {
@@ -18,7 +17,7 @@ public class DeckListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //auto
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_list);
 
@@ -34,7 +33,7 @@ public class DeckListActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(
+        DeckRecyclerViewAdapter adapter = new DeckRecyclerViewAdapter(
                 new int[] {1,2},
                 new String[] {"S1","S2"},
                 new int[] {10,20},
