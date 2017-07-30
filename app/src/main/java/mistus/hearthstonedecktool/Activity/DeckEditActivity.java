@@ -1,5 +1,6 @@
 package mistus.hearthstonedecktool.Activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -26,6 +27,15 @@ public class DeckEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_edit_layout);
 
+        Intent intent = getIntent();
+        String deckName = intent.getStringExtra("deckName");
+        String careerName = intent.getStringExtra("careerName");
+        String TypeName = intent.getStringExtra("TypeName");
+
+         Log.e("deckName List = ",deckName);
+         Log.e("careerName = ",careerName);
+         Log.e("TypeName = ",TypeName);
+        
         _createCards();
 
     }
