@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">HearthstoneDeckTool</string>
+
+    <string-array name="career_array">
+        <item>戰士</item>
+        <item>薩滿</item>
+        <item>盜賊</item>
+        <item>聖騎士</item>
+        <item>獵人</item>
+        <item>德魯伊</item>
+        <item>術士</item>
+        <item>法師</item>
+        <item>牧師</item>
+    </string-array>
 </resources>

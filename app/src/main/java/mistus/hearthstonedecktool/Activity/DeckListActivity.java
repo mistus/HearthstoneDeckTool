@@ -1,6 +1,6 @@
 package mistus.hearthstonedecktool.Activity;
 
-import android.content.Intent;
+import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import mistus.hearthstonedecktool.CardView.Deck.DeckRecyclerViewAdapter;
+import mistus.hearthstonedecktool.FragmentDialog.choose_career_fragment_dialog;
 import mistus.hearthstonedecktool.R;
 
 public class DeckListActivity extends AppCompatActivity {
@@ -27,9 +28,7 @@ public class DeckListActivity extends AppCompatActivity {
         Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(DeckListActivity.this,DeckEditActivity.class);
-                startActivity(intent);
+                _add_deck_button_event();
             }
         });
 
@@ -44,6 +43,10 @@ public class DeckListActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         DeckRecycler.setLayoutManager(layoutManager);
         DeckRecycler.setAdapter(adapter);
-
     }
+
+    private void _add_deck_button_event(){
+        DialogFragment dialog = new choose_career_fragment_dialog();
+        dialog.show(this.getFragmentManager(), "choose_career_fragment_dialog");
+   }
 }
