@@ -109,98 +109,98 @@ public class DeckEditActivity extends AppCompatActivity {
         selectConditionCardType = _getSelectConditionCardType();
         if(TypeName != Common.typeOpen){
             selectConditionCardType = selectConditionCardType+"(";
-            Stri
-            for(
-
+            String[] standardSeries = Common.standardSeries;
+            for(String series:standardSeries){
+                selectConditionCardType= selectConditionCardType +" series = '"+ series + "' or ";
             }
-            int
-            sele
-            sele
+            int conditionLength = selectConditionCardType.length();
+            selectConditionCardType = selectConditionCardType.substring(0, conditionLength-3);
+            selectConditionCardType = selectConditionCardType +") and ";
         }
 
-        //select
-        String s
+        //selectConditionCareer Job = "+ careerNameId
+        String selectConditionCareer = "(Job = " + careerNameId + " or Job = "+Common.general +")";
 
-        String S
-        SQL = SQ
-        SQL = SQ
-        SQL = SQ
-        SQL = SQ
-        return S
+        String SQL = "select * from card where ";
+        SQL = SQL + selectConditionLevel;
+        SQL = SQL + selectConditionSearchBar;
+        SQL = SQL + selectConditionCardType;
+        SQL = SQL + selectConditionCareer;
+        return SQL;
     }
 
-    private Stri
-        String s
-        if(TypeN
-            sele
-            Stri
-            for(
-
+    private String _getSelectConditionCardType(){
+        String selectConditionCardType = "";
+        if(TypeName != Common.typeOpen){
+            selectConditionCardType = selectConditionCardType+"(";
+            String[] standardSeries = Common.standardSeries;
+            for(String series:standardSeries){
+                selectConditionCardType= selectConditionCardType +" series = '"+ series + "' or ";
             }
-            int
-            sele
-            sele
+            int conditionLength = selectConditionCardType.length();
+            selectConditionCardType = selectConditionCardType.substring(0, conditionLength-3);
+            selectConditionCardType = selectConditionCardType +") and ";
         }
-        return s
+        return selectConditionCardType;
     }
 
-    private void
-        String S
-//        Log.e(
-        _createC
+    private void _decideClickevent(){
+        String SQL = getSQL();
+//        Log.e("-------SQL------", SQL);
+        _createCards(SQL);
     }
 
-    private void
-        cardRecy
+    private void _createCards(String SQL){
+        cardRecyclerView = (RecyclerView)findViewById(R.id.card_recycler);
 
-        SQLiteOp
-        SQLiteDa
-        //TODO c
-//        Cursor
-        Cursor c
-        int coun
-        int[] id
-        String[]
+        SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this);
+        SQLiteDatabase DB = DeckToolDatabaseHelper.getReadableDatabase();
+        //TODO change SQL
+//        Cursor cursor = DB.rawQuery("select * from card",null);
+        Cursor cursor = DB.rawQuery(SQL, null);
+        int count = cursor.getCount();
+        int[] ids = new int[count] ;
+        String[] names = new String [count];
 
-        for(int
-            curs
-            ids[
-            name
-//            Lo
+        for(int i=0; i < count; i++){
+            cursor.moveToNext();
+            ids[i] = cursor.getInt(0);
+            names[i] = cursor.getString(1);
+//            Log.e("name", cursor.getString(1));
         }
 
-        cursor.c
-        DB.close
+        cursor.close();
+        DB.close();
 
-        CardRecy
-        cardRecy
-        LinearLa
-        cardRecy
-        cardRecy
+        CardRecycleViewAdapter adapter = new CardRecycleViewAdapter(ids, names);
+        cardRecyclerView.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        cardRecyclerView.setLayoutManager(layoutManager);
+        cardRecyclerView.setAdapter(adapter);
     }
 
-    private int
-        switch (
-            case
-
-            case
-
-            case
-
-            case
-
-            case
-
-            case
-
-            case
-
-            case
-
-            case
-
-            defa
-
+    private int _getCareerNameId(String CareerName){
+        switch (CareerName){
+            case "戰士":
+                return Common.warrior;
+            case "薩滿":
+                return Common.shaman;
+            case "盜賊":
+                return Common.rogue;
+            case "聖騎士":
+                return Common.paladin;
+            case "獵人":
+                return Common.hunter;
+            case "德魯伊":
+                return Common.druid;
+            case "術士":
+                return Common.warlock;
+            case "法師":
+                return Common.mage;
+            case "牧師":
+                return Common.priest;
+            default:
+                return 0;
         }
 
     }
