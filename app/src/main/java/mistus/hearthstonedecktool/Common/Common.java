@@ -24,6 +24,7 @@ public class Common {
 
     //Type
     public static final String typeOpen = "開放";
+    public static final String typeStandard = "標準";
 
     //Series
     public static final String[] openSeries =

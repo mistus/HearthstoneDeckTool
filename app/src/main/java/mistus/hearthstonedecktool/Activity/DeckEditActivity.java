@@ -69,8 +69,12 @@ public class DeckEditActivity extends AppCompatActivity {
         //TODO
         //開放/標準
         //"select * from card where Job = "+ careerNameId + and type = xxx <<private;
-        String SQL = "select * from card where Job = "+ careerNameId +" or Job = " + Common.general;
 
+//        String selectConditionCardType = _getSelectConditionCardType();
+//        String SQL = "select * from card where Job = "+ careerNameId +" or Job = " + Common.general;
+
+
+        String SQL = getSQL();
         _createCards(SQL);
     }
 
@@ -106,8 +110,7 @@ public class DeckEditActivity extends AppCompatActivity {
 
         //selectConditionDeckType
         String selectConditionCardType = "";
-        selectConditionCardType = _getSelectConditionCardType();
-        if(TypeName != Common.typeOpen){
+        if(TypeName.equals(Common.typeStandard) ){
             selectConditionCardType = selectConditionCardType+"(";
             String[] standardSeries = Common.standardSeries;
             for(String series:standardSeries){
@@ -119,6 +122,7 @@ public class DeckEditActivity extends AppCompatActivity {
         }
 
         //selectConditionCareer Job = "+ careerNameId
+        //TODO checkbox = =....
         String selectConditionCareer = "(Job = " + careerNameId + " or Job = "+Common.general +")";
 
         String SQL = "select * from card where ";
@@ -129,20 +133,21 @@ public class DeckEditActivity extends AppCompatActivity {
         return SQL;
     }
 
-    private String _getSelectConditionCardType(){
-        String selectConditionCardType = "";
-        if(TypeName != Common.typeOpen){
-            selectConditionCardType = selectConditionCardType+"(";
-            String[] standardSeries = Common.standardSeries;
-            for(String series:standardSeries){
-                selectConditionCardType= selectConditionCardType +" series = '"+ series + "' or ";
-            }
-            int conditionLength = selectConditionCardType.length();
-            selectConditionCardType = selectConditionCardType.substring(0, conditionLength-3);
-            selectConditionCardType = selectConditionCardType +") and ";
-        }
-        return selectConditionCardType;
-    }
+    //used init and getSQL
+//    private String _getSelectConditionCardType(){
+//        String selectConditionCardType = "";
+//        if(TypeName.equals(Common.typeStandard) ){
+//            selectConditionCardType = selectConditionCardType+"(";
+//            String[] standardSeries = Common.standardSeries;
+//            for(String series:standardSeries){
+//                selectConditionCardType= selectConditionCardType +" series = '"+ series + "' or ";
+//            }
+//            int conditionLength = selectConditionCardType.length();
+//            selectConditionCardType = selectConditionCardType.substring(0, conditionLength-3);
+//            selectConditionCardType = selectConditionCardType +") and ";
+//        }
+//        return selectConditionCardType;
+//    }
 
     private void _decideClickevent(){
         String SQL = getSQL();
@@ -167,6 +172,7 @@ public class DeckEditActivity extends AppCompatActivity {
             ids[i] = cursor.getInt(0);
             names[i] = cursor.getString(1);
 //            Log.e("name", cursor.getString(1));
+//            Log.e("count", Integer.toString(i));
         }
 
         cursor.close();
