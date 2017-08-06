@@ -7,7 +7,10 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+
+        android:focusable="true"
+        android:focusableInTouchMode="true">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -78,66 +81,93 @@
                     <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:id="@+id/cardLevel"
                         android:orientation="horizontal">
 
                         <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-
+                            android:id="@+id/levelZero"
+                            android:text="0"
+                            android:textSize="0sp"
                             android:checked="false" />
-                        <!--android:layout_marginLeft="5dp"-->
-
                         <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:id="@+id/levelOne"
+                            android:text="1"
+                            android:textSize="0sp"/>
                         <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:id="@+id/levelTwo"
+                            android:text="2"
+                            android:textSize="0sp"/>
                         <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:id="@+id/levelThree"
+                            android:text="3"
+                            android:textSize="0sp"/>
                         <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"/>
-                        <RadioButton
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-                        <RadioButton
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:id="@+id/levelFour"
+                            android:text="4"
+                            android:textSize="0sp"/>
                         <RadioButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:id="@+id/levelFive"
+                            android:text="5"
+                            android:textSize="0sp"/>
+                        <RadioButton
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:id="@+id/levelSix"
+                            android:text="6"
+                            android:textSize="0sp"/>
+                        <RadioButton
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:id="@+id/levelSeven"
+                            android:text="7"
+                            android:textSize="0sp"/>
                     </RadioGroup>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="2.5">
-                    <TextView
+                    <EditText
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:text="Search"
+                        android:id="@+id/SearchBar"
+
+                        android:text=""
+                        android:hint="Search"
                         android:gravity="center"
-                        android:textSize="30sp"/>
+                        android:textSize="15sp"/>
                     <CheckBox
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:id="@+id/isCareer"
                         android:text="職業"/>
                     <CheckBox
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:id="@+id/isCommon"
                         android:text="共通"/>
                 </LinearLayout>
             </LinearLayout>
@@ -146,6 +176,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/decide"
             android:text="確定"/>
     </LinearLayout>
 
@@ -156,6 +187,7 @@
         android:layout_height="0dp"
         android:layout_weight="5"
         android:background="@drawable/background_repeat">
+        <!--android:isScrollContainer="false"-->
 
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>
