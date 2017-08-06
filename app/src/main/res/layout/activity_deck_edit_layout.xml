@@ -7,7 +7,10 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+
+        android:focusable="true"
+        android:focusableInTouchMode="true">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -149,7 +152,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:id="@+id/SearchBar"
+
                         android:text=""
+                        android:hint="Search"
                         android:gravity="center"
                         android:textSize="15sp"/>
                     <CheckBox
@@ -182,6 +187,7 @@
         android:layout_height="0dp"
         android:layout_weight="5"
         android:background="@drawable/background_repeat">
+        <!--android:isScrollContainer="false"-->
 
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

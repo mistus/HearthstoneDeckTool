@@ -62,17 +62,9 @@ public class DeckEditActivity extends AppCompatActivity {
         decideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _decideClickevent();
+                _decideClickEvent();
             }
         });
-
-        //TODO
-        //開放/標準
-        //"select * from card where Job = "+ careerNameId + and type = xxx <<private;
-
-//        String selectConditionCardType = _getSelectConditionCardType();
-//        String SQL = "select * from card where Job = "+ careerNameId +" or Job = " + Common.general;
-
 
         String SQL = getSQL();
         _createCards(SQL);
@@ -83,13 +75,14 @@ public class DeckEditActivity extends AppCompatActivity {
         int checkedLevelId = cardLevelRadioGroup.getCheckedRadioButtonId();
         RadioButton levelRadioButton = (RadioButton)cardLevelRadioGroup.findViewById(checkedLevelId);
 
-        //Levelに関するＳＱＬを取得する
+        //Searchに関するSQLConditionを取得する
+        //selectConditionLevel
         String selectConditionLevel = "";
         if(levelRadioButton != null){
             String level = levelRadioButton.getText().toString();
             switch(level){
                 case "7":
-                    selectConditionLevel = "level > = 7 and ";
+                    selectConditionLevel = "level >= 7 and ";
                     break;
                 default:
                     selectConditionLevel = "level = "+ level + " and ";
@@ -97,7 +90,6 @@ public class DeckEditActivity extends AppCompatActivity {
             }
         }
 
-        //Searchに関するSQLConditionを取得する
         //selectConditionSearchBar
         String Search = toString().valueOf(searchBar.getText());
         String selectConditionSearchBar = "";
@@ -122,8 +114,14 @@ public class DeckEditActivity extends AppCompatActivity {
         }
 
         //selectConditionCareer Job = "+ careerNameId
-        //TODO checkbox = =....
-        String selectConditionCareer = "(Job = " + careerNameId + " or Job = "+Common.general +")";
+        String selectConditionCareer = "";
+        if(isCareerCheckbox.isChecked() == isCommonCheckbox.isChecked()){
+            selectConditionCareer = "(Job = " + careerNameId + " or Job = "+Common.general +")";
+        }else if(isCareerCheckbox.isChecked()){
+            selectConditionCareer = "(Job = " + careerNameId +")";
+        }else{
+            selectConditionCareer = "(Job = " + Common.general +")";
+        }
 
         String SQL = "select * from card where ";
         SQL = SQL + selectConditionLevel;
@@ -133,25 +131,10 @@ public class DeckEditActivity extends AppCompatActivity {
         return SQL;
     }
 
-    //used init and getSQL
-//    private String _getSelectConditionCardType(){
-//        String selectConditionCardType = "";
-//        if(TypeName.equals(Common.typeStandard) ){
-//            selectConditionCardType = selectConditionCardType+"(";
-//            String[] standardSeries = Common.standardSeries;
-//            for(String series:standardSeries){
-//                selectConditionCardType= selectConditionCardType +" series = '"+ series + "' or ";
-//            }
-//            int conditionLength = selectConditionCardType.length();
-//            selectConditionCardType = selectConditionCardType.substring(0, conditionLength-3);
-//            selectConditionCardType = selectConditionCardType +") and ";
-//        }
-//        return selectConditionCardType;
-//    }
-
-    private void _decideClickevent(){
+    private void _decideClickEvent(){
+        searchBar.clearFocus();
         String SQL = getSQL();
-//        Log.e("-------SQL------", SQL);
+        Log.e("-------SQL------", SQL);
         _createCards(SQL);
     }
 
