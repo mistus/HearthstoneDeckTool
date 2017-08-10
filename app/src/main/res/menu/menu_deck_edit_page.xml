@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".MainActivity">
+
+    <item android:id="@+id/deckSaveIcon"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="deckSaveIcon"
+        android:layout_height="match_parent"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/deckDetailIcon"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="deckDetailIcon"
+        android:orderInCategory="99"
+        app:showAsAction="ifRoom"/>
+
+
+</menu>
