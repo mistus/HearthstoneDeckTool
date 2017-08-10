@@ -9,19 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
+import android.view.Menu;
 import java.util.ArrayList;
-
 import mistus.hearthstonedecktool.CardView.Card.CardRecycleViewAdapter;
 import mistus.hearthstonedecktool.Common.Common;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
 import mistus.hearthstonedecktool.R;
+
 
 public class DeckEditActivity extends AppCompatActivity {
 
@@ -42,10 +43,25 @@ public class DeckEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_edit_layout);
-
         _init();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_deck_edit_page, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.deckDetailIcon:
+                return true;
+            case R.id.deckSaveIcon:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     private void _init(){
         cardLevelRadioGroup = (RadioGroup)findViewById(R.id.cardLevel);
         searchBar = (EditText)findViewById(R.id.SearchBar);
