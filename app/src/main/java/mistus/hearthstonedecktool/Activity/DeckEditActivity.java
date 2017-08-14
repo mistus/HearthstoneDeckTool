@@ -1,5 +1,6 @@
 package mistus.hearthstonedecktool.Activity;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,10 +18,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.view.Menu;
-import java.util.ArrayList;
 import mistus.hearthstonedecktool.CardView.Card.CardRecycleViewAdapter;
 import mistus.hearthstonedecktool.Common.Common;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
+import mistus.hearthstonedecktool.FragmentDialog.deck_list_detail_fragment_dialog;
 import mistus.hearthstonedecktool.R;
 
 
@@ -31,7 +32,7 @@ public class DeckEditActivity extends AppCompatActivity {
     private String careerName;
     private int careerNameId;
     private String TypeName;
-    private ArrayList cardList;
+    private int[] cardList;
 
     private RadioGroup cardLevelRadioGroup;
     private EditText searchBar;
@@ -39,11 +40,15 @@ public class DeckEditActivity extends AppCompatActivity {
     private CheckBox isCommonCheckbox;
     private Button decideButton;
 
+    private RecyclerView DeckListDetailRecycler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_edit_layout);
         _init();
+
+        //TestUI
+        cardList = new int[]{11011,11010,11009};
     }
 
     @Override
@@ -51,17 +56,23 @@ public class DeckEditActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_deck_edit_page, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.deckDetailIcon:
+                Log.e("deckDetailIcon","-----------------");
+                _open_deck_detail_button_event();
                 return true;
             case R.id.deckSaveIcon:
+                Log.e("deckSaveIcon","-----------------");
                 return true;
             default:
+                Log.e("default","-----------------");
                 return super.onOptionsItemSelected(item);
         }
     }
+
     private void _init(){
         cardLevelRadioGroup = (RadioGroup)findViewById(R.id.cardLevel);
         searchBar = (EditText)findViewById(R.id.SearchBar);
@@ -82,12 +93,12 @@ public class DeckEditActivity extends AppCompatActivity {
             }
         });
 
+        DeckListDetailRecycler = (RecyclerView)findViewById(R.id.deck_list_recycler);
         String SQL = getSQL();
         _createCards(SQL);
     }
 
-    private String getSQL(){
-
+    private String getSQL() {
         int checkedLevelId = cardLevelRadioGroup.getCheckedRadioButtonId();
         RadioButton levelRadioButton = (RadioButton)cardLevelRadioGroup.findViewById(checkedLevelId);
 
@@ -170,8 +181,6 @@ public class DeckEditActivity extends AppCompatActivity {
             cursor.moveToNext();
             ids[i] = cursor.getInt(0);
             names[i] = cursor.getString(1);
-//            Log.e("name", cursor.getString(1));
-//            Log.e("count", Integer.toString(i));
         }
 
         cursor.close();
@@ -207,6 +216,14 @@ public class DeckEditActivity extends AppCompatActivity {
             default:
                 return 0;
         }
-
     }
+
+    private void _open_deck_detail_button_event(){
+        DialogFragment dialog = new deck_list_detail_fragment_dialog();
+        Bundle bundle = new Bundle();
+        bundle.putIntArray("cardList",cardList);
+        dialog.setArguments(bundle);
+        dialog.show(this.getFragmentManager(), "deck_list_detail_fragment_dialog");
+    }
+
 }
