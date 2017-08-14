@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.view.Menu;
+
+import java.util.HashMap;
+
 import mistus.hearthstonedecktool.CardView.Card.CardRecycleViewAdapter;
 import mistus.hearthstonedecktool.Common.Common;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
@@ -32,7 +35,7 @@ public class DeckEditActivity extends AppCompatActivity {
     private String careerName;
     private int careerNameId;
     private String TypeName;
-    private int[] cardList;
+    private HashMap<String, Integer> cardList;
 
     private RadioGroup cardLevelRadioGroup;
     private EditText searchBar;
@@ -48,7 +51,17 @@ public class DeckEditActivity extends AppCompatActivity {
         _init();
 
         //TestUI
-        cardList = new int[]{11011,11010,11009};
+//        cardList = new int[]{11011,11010,11009};
+        cardList = new HashMap<>();
+        cardList.put("11011",2);
+        cardList.put("11010",1);
+        cardList.put("12010",1);
+        cardList.put("12009",2);
+        cardList.put("11002",1);
+        cardList.put("10001",2);
+        cardList.put("11006",1);
+        cardList.put("11004",1);
+
     }
 
     @Override
@@ -221,7 +234,8 @@ public class DeckEditActivity extends AppCompatActivity {
     private void _open_deck_detail_button_event(){
         DialogFragment dialog = new deck_list_detail_fragment_dialog();
         Bundle bundle = new Bundle();
-        bundle.putIntArray("cardList",cardList);
+        bundle.putSerializable("cardList",cardList);
+//        bundle.putIntArray("cardList",cardList);
         dialog.setArguments(bundle);
         dialog.show(this.getFragmentManager(), "deck_list_detail_fragment_dialog");
     }

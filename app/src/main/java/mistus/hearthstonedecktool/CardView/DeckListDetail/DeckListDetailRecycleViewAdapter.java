@@ -9,12 +9,15 @@ import mistus.hearthstonedecktool.R;
 
 public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckListDetailRecycleViewAdapter.ViewHolder>
 {
-    private int cardLevel[];
-    private String cardName[];
 
-    public DeckListDetailRecycleViewAdapter(int[] cardLevel, String[] cardName){
+    private String cardName[];
+    private int cardLevel[];
+    private int cardAmount[];
+
+    public DeckListDetailRecycleViewAdapter(int[] cardLevel, int[] cardAmount, String[] cardName){
         this.cardLevel = cardLevel;
         this.cardName = cardName;
+        this.cardAmount = cardAmount;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -40,6 +43,10 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
 
         TextView level = (TextView)cardView.findViewById(R.id.cardLevel);
         level.setText(Integer.toString(cardLevel[position]));
+
+        TextView amount = (TextView)cardView.findViewById(R.id.cardAmount);
+        if(cardAmount[position] == 2){
+        amount.setText("x" + Integer.toString(cardAmount[position]));}
     }
 
     @Override
