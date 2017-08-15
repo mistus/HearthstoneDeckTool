@@ -36,15 +36,17 @@
             android:gravity="center"
             android:id="@+id/cardAmount"
             android:text=""/>
-        <Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:id="@+id/addButton"
             android:src="@android:drawable/ic_menu_add"/>
-        <Button
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:id="@+id/deleteButton"
             android:src="@android:drawable/ic_menu_delete"/>
     </LinearLayout>
 

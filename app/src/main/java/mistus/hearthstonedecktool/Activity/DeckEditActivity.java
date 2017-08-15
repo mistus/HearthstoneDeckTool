@@ -51,16 +51,9 @@ public class DeckEditActivity extends AppCompatActivity {
         _init();
 
         //TestUI
-//        cardList = new int[]{11011,11010,11009};
-        cardList = new HashMap<>();
-        cardList.put("11011",2);
-        cardList.put("11010",1);
-        cardList.put("12010",1);
-        cardList.put("12009",2);
-        cardList.put("11002",1);
-        cardList.put("10001",2);
-        cardList.put("11006",1);
-        cardList.put("11004",1);
+        //TODO  new HashMap位置移動
+        cardList = new HashMap<String, Integer>();
+
 
     }
 
@@ -74,14 +67,11 @@ public class DeckEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.deckDetailIcon:
-                Log.e("deckDetailIcon","-----------------");
                 _open_deck_detail_button_event();
                 return true;
             case R.id.deckSaveIcon:
-                Log.e("deckSaveIcon","-----------------");
                 return true;
             default:
-                Log.e("default","-----------------");
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -199,7 +189,7 @@ public class DeckEditActivity extends AppCompatActivity {
         cursor.close();
         DB.close();
 
-        CardRecycleViewAdapter adapter = new CardRecycleViewAdapter(ids, names);
+        CardRecycleViewAdapter adapter = new CardRecycleViewAdapter(ids, names, this);
         cardRecyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         cardRecyclerView.setLayoutManager(layoutManager);
@@ -235,9 +225,68 @@ public class DeckEditActivity extends AppCompatActivity {
         DialogFragment dialog = new deck_list_detail_fragment_dialog();
         Bundle bundle = new Bundle();
         bundle.putSerializable("cardList",cardList);
-//        bundle.putIntArray("cardList",cardList);
         dialog.setArguments(bundle);
         dialog.show(this.getFragmentManager(), "deck_list_detail_fragment_dialog");
     }
 
+
+    public void addCardList(String key){
+
+        //TODO 確認是否傳說
+        // >29 return
+        int deckCardAmount = getCardAmount();
+        if(deckCardAmount > 29){
+            return;
+        }
+
+        //isExist -> add
+        boolean exist = cardList.containsKey(key);
+
+        if(exist){
+            int cardAmount = cardList.get(key);
+            if(cardAmount > 1){
+                return;
+            }
+
+            cardList.remove(key);
+            cardList.put(key, cardAmount + 1);
+            return;
+        }
+
+        int defaultAmount = 1 ;
+        cardList.put(key, defaultAmount);
+
+    }
+
+  /***
+     * 刪除卡片
+     * @param  key
+     */
+    public void removeCardList(String key){
+
+        boolean exist = cardList.containsKey(key);
+        if(!exist){
+            return;
+        }
+
+        int cardAmount = cardList.get(key);
+        if(cardAmount > 1){
+            cardAmount = cardAmount - 1;
+            cardList.remove(key);
+            cardList.put(key, cardAmount);
+        }else{
+            cardList.remove(key);
+        }
+    }
+
+    public int getCardAmount(){
+        int cardAmount = 0;
+
+        for(HashMap.Entry card : cardList.entrySet()){
+            int amount = (int)card.getValue();
+
+            cardAmount = cardAmount + amount;
+        }
+        return cardAmount;
+    }
 }
