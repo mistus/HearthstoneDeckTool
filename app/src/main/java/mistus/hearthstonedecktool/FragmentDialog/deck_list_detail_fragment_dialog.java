@@ -212,7 +212,7 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         DB.close();
 
         DeckListDetailRecycleViewAdapter adapter = new DeckListDetailRecycleViewAdapter(cardIdList, levelList, amountList, nameList, getActivity(),this);
-
+        adapter.notifyItemRemoved(3);
         DeckListDetailRecycler.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         DeckListDetailRecycler.setLayoutManager(layoutManager);

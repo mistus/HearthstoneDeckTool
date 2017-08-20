@@ -230,13 +230,13 @@ public class DeckEditActivity extends AppCompatActivity {
     }
 
 
-    public void addCardList(String key){
+    public int addCardList(String key){
 
         //TODO 確認是否傳說
         // >29 return
         int deckCardAmount = getCardAmount();
         if(deckCardAmount > 29){
-            return;
+            return -1;
         }
 
         //isExist -> add
@@ -245,17 +245,18 @@ public class DeckEditActivity extends AppCompatActivity {
         if(exist){
             int cardAmount = cardList.get(key);
             if(cardAmount > 1){
-                return;
+                return cardAmount;
             }
 
             cardList.remove(key);
-            cardList.put(key, cardAmount + 1);
-            return;
+            cardAmount = cardAmount +1 ;
+            cardList.put(key, cardAmount);
+            return cardAmount;
         }
 
         int defaultAmount = 1 ;
         cardList.put(key, defaultAmount);
-
+        return defaultAmount;
     }
 
   /***
