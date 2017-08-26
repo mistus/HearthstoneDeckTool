@@ -225,4 +225,5 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         Log.e("---cardAmount---",Integer.toString(cardAmount));
         cardAmountTextview.setText("("+ cardAmount +"/30)");
     }
+
 }

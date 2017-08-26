@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,33 +67,46 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         }
 
         private void addButtonEvent(){
-            ((DeckEditActivity)context).addCardList(Integer.toString((int)addButton.getTag()));
+            int newAmount  = ((DeckEditActivity)context).addCardList(Integer.toString((int)addButton.getTag()));
             ((deck_list_detail_fragment_dialog)contextDialogFragment).renewCardAmount();
 
-            String amountText = amountTextView.getText().toString();
-            switch(amountText){
-                case "":
+//            String amountText = amountTextView.getText().toString();
+            switch(newAmount){
+                case 1:
+                    amountTextView.setText("");
+                    adapterContext.setCardAmount(getAdapterPosition(), newAmount);
+//                    Log.e("---add case 1---",Integer.toString(newAmount));
+//                    adapterContext.checkCardAmount();
+                    break;
+                case 2:
                     amountTextView.setText("x2");
-                    adapterContext.increaseCardAmount(getAdapterPosition());
+                    adapterContext.setCardAmount(getAdapterPosition(), newAmount);
+//                    Log.e("---add case 2---",Integer.toString(newAmount));
+//                    adapterContext.checkCardAmount();
                     break;
                 default:
                     break;
             }
         }
         private void removeButtonEvent(){
-            ((DeckEditActivity)context).removeCardList(Integer.toString((int)deleteButton.getTag()));
+            int newAmount  = ((DeckEditActivity)context).removeCardList(Integer.toString((int)deleteButton.getTag()));
             ((deck_list_detail_fragment_dialog)contextDialogFragment).renewCardAmount();
 
-            String amountText = amountTextView.getText().toString();
-            switch(amountText){
-                case "x2":
+//            String amountText = amountTextView.getText().toString();
+            switch(newAmount){
+                case 1:
                     amountTextView.setText("");
-                    adapterContext.decreaseCardAmount(getAdapterPosition());
+                    adapterContext.setCardAmount(getAdapterPosition(), 1);
+//                    Log.e("---remove case 1---",Integer.toString(newAmount));
+//                    adapterContext.checkCardAmount();
                     break;
-                case "":
+                case 0:
                     adapterContext.removeAt(getAdapterPosition());
+//                    Log.e("---remove case 0---",Integer.toString(newAmount));
+//                    adapterContext.checkCardAmount();
                     break;
                 default:
+                    Log.e("---removeButtonEvent---",Integer.toString(newAmount));
                     break;
             }
         }
@@ -107,6 +121,7 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
 
     @Override
     public void onBindViewHolder(DeckListDetailRecycleViewAdapter.ViewHolder holder, int position){
+//        checkCardAmount();
         //Name
         CardView cardView = holder.cardView;
         TextView name = (TextView)cardView.findViewById(R.id.cardName);
@@ -119,7 +134,7 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         //amount
         amountTextView = (TextView)cardView.findViewById(R.id.cardAmount);
         if(cardAmount[position] == 2){
-            amountTextView.setText("x" + Integer.toString(cardAmount[position]));}
+            amountTextView.setText("xxxx" + Integer.toString(cardAmount[position]));}
 
         //addButton
         addButton = (ImageButton)cardView.findViewById(R.id.addButton);
@@ -141,7 +156,7 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         int newCardIdList[] = new int[length];
         int newCardLevel[] = new int[length];
         int newCardAmount[] = new int[length];
-
+        Log.e("removeAt","---123---");
         int jumpCounter = 0;
         for(int i=0; i<length; i++){
             if(i == position){
@@ -151,6 +166,11 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
             newCardIdList[i] = cardIdList[i + jumpCounter];
             newCardLevel[i] = cardLevel[i + jumpCounter];
             newCardAmount[i] = cardAmount[i + jumpCounter];
+            Log.e("removeAt","---321---");
+        Log.e("cardName",newCardName[i]);
+        Log.e("cardIdList",Integer.toString(newCardIdList[i]));
+        Log.e("cardLevel", Integer.toString(newCardLevel[i]));
+        Log.e("cardAmount",Integer.toString(newCardAmount[i]));
         }
 
         cardName = newCardName;
@@ -160,14 +180,16 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, length);
     }
-    public void increaseCardAmount(int position){
-        if(cardAmount[position] == 2){
-            return;
-        }
-        cardAmount[position] = cardAmount[position] + 1;
-    }
-    public void decreaseCardAmount(int position){
-        cardAmount[position] = cardAmount[position] - 1;
+    public void setCardAmount(int position, int amount){
+        cardAmount[position] = amount;
     }
 
+    public void checkCardAmount(){
+        int leg = getItemCount();
+        for(int i = 0; i<leg ; i++){
+            Log.e("cardName",cardName[i]);
+            Log.e("cardAmount",Integer.toString(cardAmount[i]));
+        }
+
+    }
 }

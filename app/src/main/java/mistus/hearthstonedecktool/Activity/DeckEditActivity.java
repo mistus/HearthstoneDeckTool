@@ -263,11 +263,11 @@ public class DeckEditActivity extends AppCompatActivity {
      * 刪除卡片
      * @param  key
      */
-    public void removeCardList(String key){
+    public int removeCardList(String key){
 
         boolean exist = cardList.containsKey(key);
         if(!exist){
-            return;
+            return -1;
         }
 
         int cardAmount = cardList.get(key);
@@ -275,8 +275,10 @@ public class DeckEditActivity extends AppCompatActivity {
             cardAmount = cardAmount - 1;
             cardList.remove(key);
             cardList.put(key, cardAmount);
+            return cardAmount;
         }else{
             cardList.remove(key);
+            return 0;
         }
     }
 
