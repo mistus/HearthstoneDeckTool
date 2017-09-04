@@ -57,8 +57,6 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         super.onCreate(savedInstanceState);
         cardList = (HashMap)getArguments().getSerializable("cardList");
     }
-//            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -94,6 +92,11 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         levelSevenPlusGraph = (TextView)view.findViewById(R.id.levelSevenPlusGraph);
         levelSevenPlusBlank = (TextView)view.findViewById(R.id.levelSevenPlusBlank);
 
+        _createDeckListDetailCardview();
+        _createGraph();
+    }
+
+    public void renewGraph(){
         _createDeckListDetailCardview();
         _createGraph();
     }
@@ -152,13 +155,15 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
             return levelCounter;
         }
 
-        for (int level : levelList){
-            if(level >= 7){
-                levelCounter[7]++;
+        for (int i = 0;i < levelList.length;i++){
+            if(levelList[i] >= 7){
+                levelCounter[7] = levelCounter[7] + amountList[i];
                 continue;
             }
-            levelCounter[level]++;
+            int level = levelList[i];
+            levelCounter[level] = levelCounter[level] + amountList[i];
         }
+
         return levelCounter;
     }
     private int _getLargestLevelAmount(int[] levelList){
@@ -179,6 +184,7 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
     private void _createDeckListDetailCardview (){
 
         if(cardList.isEmpty()){
+            levelList = null;
             return;
         }
 
@@ -222,7 +228,6 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
     public void renewCardAmount(){
         Context context = getActivity();
         int cardAmount = ((DeckEditActivity)context).getCardAmount();
-        Log.e("---cardAmount---",Integer.toString(cardAmount));
         cardAmountTextview.setText("("+ cardAmount +"/30)");
     }
 
