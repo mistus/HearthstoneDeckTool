@@ -3,6 +3,7 @@ package mistus.hearthstonedecktool.FragmentDialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -17,6 +18,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.HashMap;
+
+import mistus.hearthstonedecktool.Activity.DeckEditActivity;
 import mistus.hearthstonedecktool.CardView.DeckListDetail.DeckListDetailRecycleViewAdapter;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
 import mistus.hearthstonedecktool.R;
@@ -28,8 +31,10 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
     private String[] nameList;
     private int[] levelList;
     private int[] amountList;
+    private int[] cardIdList;
     private View view;
 
+    private TextView cardAmountTextview;
     private TextView levelZeroGraph;
     private TextView levelZeroBlank;
     private TextView levelOneGraph;
@@ -52,8 +57,6 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         super.onCreate(savedInstanceState);
         cardList = (HashMap)getArguments().getSerializable("cardList");
     }
-//            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -68,6 +71,9 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         LayoutInflater inflater = getActivity().getLayoutInflater();
         view  = inflater.inflate(R.layout.dialogview_deck_detail, null);
         DeckListDetailRecycler = (RecyclerView)view.findViewById(R.id.deck_list_recycler);
+
+        cardAmountTextview = (TextView)view.findViewById(R.id.cardAmount);
+        renewCardAmount();
 
         levelZeroGraph = (TextView)view.findViewById(R.id.levelZeroGraph);
         levelZeroBlank = (TextView)view.findViewById(R.id.levelZeroBlank);
@@ -86,6 +92,11 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         levelSevenPlusGraph = (TextView)view.findViewById(R.id.levelSevenPlusGraph);
         levelSevenPlusBlank = (TextView)view.findViewById(R.id.levelSevenPlusBlank);
 
+        _createDeckListDetailCardview();
+        _createGraph();
+    }
+
+    public void renewGraph(){
         _createDeckListDetailCardview();
         _createGraph();
     }
@@ -140,17 +151,27 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
     private int[] _getLevelCounter(int[] levelList){
         int[] levelCounter = new int[]{0,0,0,0,0,0,0,0};
 
-        for (int level : levelList){
-            if(level >= 7){
-                levelCounter[7]++;
+        if(levelList == null){
+            return levelCounter;
+        }
+
+        for (int i = 0;i < levelList.length;i++){
+            if(levelList[i] >= 7){
+                levelCounter[7] = levelCounter[7] + amountList[i];
                 continue;
             }
-            levelCounter[level]++;
+            int level = levelList[i];
+            levelCounter[level] = levelCounter[level] + amountList[i];
         }
+
         return levelCounter;
     }
     private int _getLargestLevelAmount(int[] levelList){
         int largestLevelAmount = 0;
+
+        if(levelList ==null){
+            return 0;
+        }
 
         for(int counter : levelList){
             if(largestLevelAmount < counter){
@@ -161,8 +182,13 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
     }
 
     private void _createDeckListDetailCardview (){
-        String cardIds = "(";
 
+        if(cardList.isEmpty()){
+            levelList = null;
+            return;
+        }
+
+        String cardIds = "(";
         for(HashMap.Entry cardMap : cardList.entrySet()){
             cardIds = cardIds + cardMap.getKey();
             cardIds = cardIds +",";
@@ -179,24 +205,30 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         nameList = new String [count];
         levelList = new int[count] ;
         amountList = new int[count] ;
+        cardIdList = new int[count] ;
 
         for(int i=0; i < count; i++){
             cursor.moveToNext();
+            cardIdList[i] = cursor.getInt(0);
             levelList[i] = cursor.getInt(2);
             nameList[i] = cursor.getString(1);
             amountList[i] = cardList.get(Integer.toString(cursor.getInt(0)));
-//            Log.e("name", cursor.getString(1));
-//            Log.e("levelList", Integer.toString(cursor.getInt(2)));
-//            Log.e("amountList",Integer.toString(cardList.get(Integer.toString(cursor.getInt(0)))));
         }
         cursor.close();
         DB.close();
 
-        DeckListDetailRecycleViewAdapter adapter = new DeckListDetailRecycleViewAdapter(levelList, amountList, nameList);
-
+        DeckListDetailRecycleViewAdapter adapter = new DeckListDetailRecycleViewAdapter(cardIdList, levelList, amountList, nameList, getActivity(),this);
+        adapter.notifyItemRemoved(3);
         DeckListDetailRecycler.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         DeckListDetailRecycler.setLayoutManager(layoutManager);
         DeckListDetailRecycler.setAdapter(adapter);
     }
+
+    public void renewCardAmount(){
+        Context context = getActivity();
+        int cardAmount = ((DeckEditActivity)context).getCardAmount();
+        cardAmountTextview.setText("("+ cardAmount +"/30)");
+    }
+
 }

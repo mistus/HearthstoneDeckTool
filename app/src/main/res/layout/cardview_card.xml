@@ -27,6 +27,7 @@
                 android:gravity="center"
                 android:textSize="20sp"
                 android:id="@+id/name"
+                android:tag="Null"
                 android:text="心靈之怒(1/2)"/>
 
             <LinearLayout
@@ -38,11 +39,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:id="@+id/addButton"
                     android:src="@android:drawable/ic_menu_add"/>
                 <ImageButton
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:id="@+id/deleteButton"
                     android:src="@android:drawable/ic_menu_delete"/>
 
             </LinearLayout>
