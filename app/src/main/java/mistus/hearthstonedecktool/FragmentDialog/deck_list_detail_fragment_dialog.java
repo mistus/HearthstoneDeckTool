@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -97,7 +96,7 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
     }
 
     public void renewGraph(){
-        _createDeckListDetailCardview();
+//        _createDeckListDetailCardview();
         _createGraph();
     }
 
@@ -231,4 +230,63 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         cardAmountTextview.setText("("+ cardAmount +"/30)");
     }
 
+    /***
+     * カードの数を追加する
+     * @int position
+     */
+    public void addCardAmount(int position){
+        if(amountList[position] > 1){
+            return;
+        }
+        amountList[position]++;
+    }
+
+    /***
+     * カードの数を削除する
+     * @int position
+     */
+    public void removeCardAmount(int position){
+        switch (amountList[position]){
+            case 2:
+                amountList[position] = amountList[position] - 1 ;
+                break;
+            case 1:
+                removeAt(position);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void removeAt(int position) {
+        int length = nameList.length - 1 ;
+        String newNameList[] = new String[length];
+        int newCardIdList[] = new int[length];
+        int newLevelList[] = new int[length];
+        int newAmountList[] = new int[length];
+
+        int jumpCounter = 0;
+        for(int i=0; i<length; i++){
+            if(i == position){
+                jumpCounter++;
+            }
+            newNameList[i] = nameList[i +  jumpCounter];
+            newCardIdList[i] = cardIdList[i + jumpCounter];
+            newLevelList[i] = levelList[i + jumpCounter];
+            newAmountList[i] = amountList[i + jumpCounter];
+        }
+        nameList = newNameList;
+        cardIdList = newCardIdList;
+        levelList = newLevelList;
+        amountList = newAmountList;
+    }
 }
+
+
+
+
+
+
+
+
+

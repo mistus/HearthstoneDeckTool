@@ -65,6 +65,7 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         private void addButtonEvent(){
             int newAmount  = ((DeckEditActivity)context).addCardList(Integer.toString((int)addButton.getTag()));
             ((deck_list_detail_fragment_dialog)contextDialogFragment).renewCardAmount();
+            ((deck_list_detail_fragment_dialog)contextDialogFragment).addCardAmount(getAdapterPosition());
 
             switch(newAmount){
                 case 1:
@@ -81,6 +82,7 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         private void removeButtonEvent(){
             int newAmount  = ((DeckEditActivity)context).removeCardList(Integer.toString((int)deleteButton.getTag()));
             ((deck_list_detail_fragment_dialog)contextDialogFragment).renewCardAmount();
+            ((deck_list_detail_fragment_dialog)contextDialogFragment).removeCardAmount(getAdapterPosition());
 
             switch(newAmount){
                 case 1:
