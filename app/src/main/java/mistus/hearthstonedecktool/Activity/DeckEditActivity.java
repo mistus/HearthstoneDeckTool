@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,12 +37,14 @@ public class DeckEditActivity extends AppCompatActivity {
     private int careerNameId;
     private String TypeName;
     private HashMap<String, Integer> cardList;
+    private ActionBar actionbar;
 
     private RadioGroup cardLevelRadioGroup;
     private EditText searchBar;
     private CheckBox isCareerCheckbox;
     private CheckBox isCommonCheckbox;
     private Button decideButton;
+
 
     private RecyclerView DeckListDetailRecycler;
     @Override
@@ -82,9 +85,12 @@ public class DeckEditActivity extends AppCompatActivity {
         isCareerCheckbox = (CheckBox)findViewById(R.id.isCareer);
         isCommonCheckbox = (CheckBox)findViewById(R.id.isCommon);
         decideButton = (Button)findViewById(R.id.decide);
+        actionbar = getSupportActionBar();
 
         Intent intent = getIntent();
         deckName = intent.getStringExtra("deckName");
+        actionbar.setTitle(deckName);
+
         careerName = intent.getStringExtra("careerName");
         TypeName = intent.getStringExtra("TypeName");
         careerNameId = _getCareerNameId(careerName);
