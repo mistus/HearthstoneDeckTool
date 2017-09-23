@@ -36,6 +36,7 @@
             android:gravity="left|center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:id="@+id/deckType"
             android:text="Standard"
             android:textSize="18dp"/>
         <TextView
@@ -43,6 +44,7 @@
             android:gravity="left|center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:id="@+id/deckAmount"
             android:text="30/30"
             android:textSize="18dp"/>
         <ImageView
