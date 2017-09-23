@@ -26,15 +26,20 @@ import mistus.hearthstonedecktool.CardView.Card.CardRecycleViewAdapter;
 import mistus.hearthstonedecktool.Common.Common;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
 import mistus.hearthstonedecktool.FragmentDialog.deck_list_detail_fragment_dialog;
+import mistus.hearthstonedecktool.FragmentDialog.saveCardListFragmentDialog;
 import mistus.hearthstonedecktool.R;
 
 
 public class DeckEditActivity extends AppCompatActivity {
 
     private RecyclerView cardRecyclerView;
+
+
+
     private String deckName;
     private String careerName;
     private int careerNameId;
+
     private String TypeName;
     private HashMap<String, Integer> cardList;
     private ActionBar actionbar;
@@ -45,7 +50,25 @@ public class DeckEditActivity extends AppCompatActivity {
     private CheckBox isCommonCheckbox;
     private Button decideButton;
 
+    public int getCareerNameId() {
+        return careerNameId;
+    }
 
+    public String getTypeName() {
+        return TypeName;
+    }
+
+    public HashMap<String, Integer> getCardList() {
+        return cardList;
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
+
+    public void setDeckName(String deckName) {
+        this.deckName = deckName;
+    }
     private RecyclerView DeckListDetailRecycler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +96,7 @@ public class DeckEditActivity extends AppCompatActivity {
                 _open_deck_detail_button_event();
                 return true;
             case R.id.deckSaveIcon:
+                _saveDeckButtonEvent();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -235,6 +259,14 @@ public class DeckEditActivity extends AppCompatActivity {
         dialog.show(this.getFragmentManager(), "deck_list_detail_fragment_dialog");
     }
 
+    private void _saveDeckButtonEvent(){
+        DialogFragment dialog = new saveCardListFragmentDialog();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("cardList",cardList);
+        bundle.putSerializable("deckName",deckName);
+        dialog.setArguments(bundle);
+        dialog.show(this.getFragmentManager(), "saveCardListFragmentDialog");
+    }
 
     public int addCardList(String key){
 

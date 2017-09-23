@@ -18,6 +18,22 @@ public class DeckToolDatabaseHelper extends SQLiteOpenHelper {
             "type TEXT NOT NULL,"+
             "series TEXT);";
 
+    //1   新卡組   30  標準  盜賊
+    private String createTablePlayerDecks ="create table player_decks ("+
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "deckName TEXT NOT NULL,"+
+                    "deckType TEXT NOT NULL,"+
+                    "job INTEGER NOT NULL,"+
+                    "amount INTEGER NOT NULL);";
+
+    //1  1  10001 2
+    //2  1  10002 1
+    private String createTablePlayerDeckCardLists = "create table player_deck_card_lists ("+
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "deckId INTEGER NOT NULL,"+
+                    "cardId INTEGER NOT NULL,"+
+                    "amount INTEGER NOT NULL);";
+
     public DeckToolDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -25,6 +41,8 @@ public class DeckToolDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(createTableCard);
+        sqLiteDatabase.execSQL(createTablePlayerDecks);
+        sqLiteDatabase.execSQL(createTablePlayerDeckCardLists);
         insertDefaultDataCardWarrior insertWarrior = new insertDefaultDataCardWarrior(sqLiteDatabase);
         insertWarrior.insertDefaultData();
     }

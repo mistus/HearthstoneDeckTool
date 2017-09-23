@@ -43,13 +43,26 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
-        TextView textView = (TextView)cardView.findViewById(R.id.deckName);
-        textView.setText(deckName[position]);
+        TextView deckNameView = (TextView)cardView.findViewById(R.id.deckName);
+        deckNameView.setText(deckName[position]);
+
+        TextView deckTypeView = (TextView)cardView.findViewById(R.id.deckType);
+        deckTypeView.setText(getDeckTypeName(isStandardType[position]));
+
+        TextView deckAmountView = (TextView)cardView.findViewById(R.id.deckAmount);
+        deckAmountView.setText(Integer.toString(Quantity[position]));
     }
 
     @Override
     public int getItemCount() {
         return deckName.length;
+    }
+
+    private String getDeckTypeName(boolean isStandardType){
+        if(isStandardType){
+            return "Standard";
+        }
+        return "Open";
     }
 
 }
