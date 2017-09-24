@@ -168,8 +168,8 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
 
         ImageView careerImageView = (ImageView)cardView.findViewById(R.id.careerImageView);
         careerImageView.setTag(job[position]);
-        String engilshName = Common.getCareerEnglishName(job[position]);
-        int src = careerImageView.getResources().getIdentifier("mistus.hearthstonedecktool:drawable/"+engilshName , null, null);
+        String englishName = Common.getCareerEnglishName(job[position]);
+        int src = careerImageView.getResources().getIdentifier("mistus.hearthstonedecktool:drawable/"+englishName , null, null);
         careerImageView.setImageResource(src);
     }
 
