@@ -32,6 +32,7 @@ public class savePlayerDeckList {
         cursor.close();
 
         if(count > 0){
+            _deletePlayerDeckCardList(getDeckIdByDeckName(this.deckName));
             _deleteDeckCards(this.deckName);
         }
         _insertDeckCards(this.deckName, this.deckType, this.job, this.amount, this.cardList);
@@ -64,11 +65,7 @@ public class savePlayerDeckList {
         insertData.put("amount", amount);
         DB.insert("player_decks"  ,null, insertData);
 
-        String SQL = "select * from player_decks where deckName = '" + deckName+"'";
-        Cursor cursor = DB.rawQuery(SQL, null);
-        cursor.moveToNext();
-        int deckId = cursor.getInt(0);
-        cursor.close();
+        int deckId = getDeckIdByDeckName(deckName);
 
         return deckId;
     }
@@ -89,5 +86,20 @@ public class savePlayerDeckList {
         return DB.delete(table, whereClause, whereArgs) > 0;
     }
 
+    private boolean _deletePlayerDeckCardList(int deckId){
+        String table = "player_deck_card_lists";
+        String whereClause = "deckId=?";
+        String[] whereArgs = new String[] {Integer.toString(deckId)};
+        return DB.delete(table, whereClause, whereArgs) > 0;
+    }
 
+    private int getDeckIdByDeckName(String deckName){
+        String SQL = "select * from player_decks where deckName = '" + deckName+"'";
+        Cursor cursor = DB.rawQuery(SQL, null);
+        cursor.moveToNext();
+        int deckId = cursor.getInt(0);
+        cursor.close();
+
+        return deckId;
+    }
 }
