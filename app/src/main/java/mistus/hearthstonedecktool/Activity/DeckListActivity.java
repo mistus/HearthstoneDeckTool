@@ -71,7 +71,7 @@ public class DeckListActivity extends AppCompatActivity {
 
     private void setAdapter(){
         DeckRecyclerViewAdapter adapter = new DeckRecyclerViewAdapter(
-                deckId, deckName, job, isStandardType, Quantity);
+                deckId, deckName, job, isStandardType, Quantity, this);
         DeckRecycler.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         DeckRecycler.setLayoutManager(layoutManager);
@@ -79,7 +79,7 @@ public class DeckListActivity extends AppCompatActivity {
     }
 
     private void renewDeckArray(){
-        String SQL = "select * from player_decks";
+        String SQL = "select * from player_decks order by id desc";
         Cursor cursor = DB.rawQuery(SQL, null);
         int count = cursor.getCount();
 

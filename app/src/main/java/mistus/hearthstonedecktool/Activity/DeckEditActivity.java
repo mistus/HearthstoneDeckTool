@@ -33,17 +33,12 @@ import mistus.hearthstonedecktool.R;
 public class DeckEditActivity extends AppCompatActivity {
 
     private RecyclerView cardRecyclerView;
-
-
-
     private String deckName;
     private String careerName;
     private int careerNameId;
-
     private String TypeName;
     private HashMap<String, Integer> cardList;
     private ActionBar actionbar;
-
     private RadioGroup cardLevelRadioGroup;
     private EditText searchBar;
     private CheckBox isCareerCheckbox;
@@ -75,12 +70,6 @@ public class DeckEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_edit_layout);
         _init();
-
-        //TestUI
-        //TODO  new HashMap位置移動
-        cardList = new HashMap<String, Integer>();
-
-
     }
 
     @Override
@@ -112,6 +101,12 @@ public class DeckEditActivity extends AppCompatActivity {
         actionbar = getSupportActionBar();
 
         Intent intent = getIntent();
+
+        cardList = (HashMap)intent.getSerializableExtra("cardList");
+        if (cardList==null){
+           cardList = new HashMap<String, Integer>();
+        }
+
         deckName = intent.getStringExtra("deckName");
         actionbar.setTitle(deckName);
 
@@ -194,7 +189,6 @@ public class DeckEditActivity extends AppCompatActivity {
     private void _decideClickEvent(){
         searchBar.clearFocus();
         String SQL = getSQL();
-        Log.e("-------SQL------", SQL);
         _createCards(SQL);
     }
 
