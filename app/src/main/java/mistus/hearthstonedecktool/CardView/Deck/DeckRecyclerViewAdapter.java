@@ -1,25 +1,31 @@
 package mistus.hearthstonedecktool.CardView.Deck;
 
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
 
 import mistus.hearthstonedecktool.Activity.DeckEditActivity;
+import mistus.hearthstonedecktool.Activity.DeckListActivity;
 import mistus.hearthstonedecktool.Common.Common;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
+import mistus.hearthstonedecktool.Database.savePlayerDeckList;
 import mistus.hearthstonedecktool.R;
 
 public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerViewAdapter.ViewHolder>{
@@ -47,6 +53,7 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
         private TextView deckTypeView;
         private TextView deckAmountView;
         private ImageView CareerImageView;
+        private ImageButton deleteImageButton;
 
         public ViewHolder(CardView view) {
             super(view);
@@ -56,11 +63,43 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
             deckTypeView = (TextView)cardView.findViewById(R.id.deckType);
             deckAmountView = (TextView)cardView.findViewById(R.id.deckAmount);
             CareerImageView = (ImageView)cardView.findViewById(R.id.careerImageView);
+
+            deleteImageButton = (ImageButton)cardView.findViewById(R.id.deleteImageButton);
+            deleteImageButton.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            _createEditPage();
+            if(view.equals(deleteImageButton)){
+                Dialog DeleteDialog = _createDeleteDialog();
+                DeleteDialog.show();
+            }else{
+                _createEditPage();
+            }
+        }
+
+        private Dialog _createDeleteDialog(){
+            Builder builder = new android.app.AlertDialog.Builder(context);
+            builder.setMessage("要刪除卡組嗎?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    _deleteDeck();
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                }
+            });
+            return builder.create();
+        }
+
+        private void _deleteDeck(){
+            savePlayerDeckList savePlayerDeckList = new savePlayerDeckList();
+            DeckListActivity DeckListActivity = (DeckListActivity)context;
+            savePlayerDeckList.setDB(DeckListActivity.getDB());
+            savePlayerDeckList._deleteDeck(deckNameView.getText().toString());
+            DeckListActivity.renewDeckArray();
         }
 
         private void _createEditPage(){
@@ -78,6 +117,7 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
             intent.putExtras(bundle);
             context.startActivity(intent);
         }
+
         private HashMap<String, Integer> _getCardList(String TypeName){
             HashMap<String, Integer> cardList = new HashMap<String, Integer>();
 
@@ -126,8 +166,11 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
         TextView deckAmountView = (TextView)cardView.findViewById(R.id.deckAmount);
         deckAmountView.setText(Integer.toString(Quantity[position]));
 
-        ImageView CareerImageView = (ImageView)cardView.findViewById(R.id.careerImageView);
-        CareerImageView.setTag(job[position]);
+        ImageView careerImageView = (ImageView)cardView.findViewById(R.id.careerImageView);
+        careerImageView.setTag(job[position]);
+        String engilshName = Common.getCareerEnglishName(job[position]);
+        int src = careerImageView.getResources().getIdentifier("mistus.hearthstonedecktool:drawable/"+engilshName , null, null);
+        careerImageView.setImageResource(src);
     }
 
     @Override

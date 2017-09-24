@@ -53,7 +53,6 @@ public class DeckListActivity extends AppCompatActivity {
         SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this);
         this.DB = DeckToolDatabaseHelper.getReadableDatabase();
         renewDeckArray();
-        setAdapter();
     }
 
     private void _add_deck_button_event(){
@@ -78,7 +77,7 @@ public class DeckListActivity extends AppCompatActivity {
         DeckRecycler.setAdapter(adapter);
     }
 
-    private void renewDeckArray(){
+    public void renewDeckArray(){
         String SQL = "select * from player_decks order by id desc";
         Cursor cursor = DB.rawQuery(SQL, null);
         int count = cursor.getCount();
@@ -98,6 +97,11 @@ public class DeckListActivity extends AppCompatActivity {
             Quantity[i] = cursor.getInt(4);
         }
         cursor.close();
-        DB.close();
+//        DB.close();
+        setAdapter();
+    }
+
+    public SQLiteDatabase getDB() {
+        return DB;
     }
 }

@@ -48,12 +48,13 @@
             android:id="@+id/deckAmount"
             android:text="30/30"
             android:textSize="18dp"/>
-        <ImageView
+        <ImageButton
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:src="@drawable/warrior"/>
+            android:id="@+id/deleteImageButton"
+            android:src="@android:drawable/ic_menu_delete"/>
 
     </LinearLayout>
 

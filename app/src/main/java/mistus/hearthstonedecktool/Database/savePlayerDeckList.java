@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.HashMap;
 
@@ -14,7 +13,6 @@ import mistus.hearthstonedecktool.Activity.DeckEditActivity;
 public class savePlayerDeckList {
     private SQLiteDatabase DB;
     private DeckEditActivity DeckEditActivity;
-
     private String deckName;
     private String deckType;
     private int job;
@@ -25,6 +23,8 @@ public class savePlayerDeckList {
         _init(context);
     }
 
+    public savePlayerDeckList() {
+    }
     public void saveDeck(){
         String SQL = "select * from player_decks where deckName = '" +deckName+"'";
         Cursor cursor = DB.rawQuery(SQL, null);
@@ -32,10 +32,13 @@ public class savePlayerDeckList {
         cursor.close();
 
         if(count > 0){
-            _deletePlayerDeckCardList(getDeckIdByDeckName(this.deckName));
-            _deleteDeckCards(this.deckName);
+            _deleteDeck(this.deckName);
         }
-        _insertDeckCards(this.deckName, this.deckType, this.job, this.amount, this.cardList);
+        _insertDeck(this.deckName, this.deckType, this.job, this.amount, this.cardList);
+    }
+
+    public void setDB(SQLiteDatabase DB) {
+        this.DB = DB;
     }
 
     private void _init(Context context){
@@ -50,11 +53,16 @@ public class savePlayerDeckList {
         this.cardList = DeckEditActivity.getCardList();
 
     }
-    private void _insertDeckCards(String deckName, String deckType, int job, int amount
-            ,HashMap<String, Integer> cardList){
+    private void _insertDeck(String deckName, String deckType, int job, int amount
+            , HashMap<String, Integer> cardList){
 
         int deckId = _insertPlayerDeck(deckName, deckType, job, amount);
         _insertPlayerDeckCardList(deckId, cardList);
+    }
+
+    public void _deleteDeck(String deckName){
+        _deletePlayerDeckCardList(getDeckIdByDeckName(deckName));
+        _deleteDeckCards(deckName);
     }
 
     private int  _insertPlayerDeck(String deckName, String deckType, int job, int amount){
