@@ -30,7 +30,7 @@ import mistus.hearthstonedecktool.FragmentDialog.saveCardListFragmentDialog;
 import mistus.hearthstonedecktool.R;
 
 
-public class DeckEditActivity extends AppCompatActivity {
+public class DeckEditActivity extends AppCompatActivity implements View.OnClickListener,RadioGroup.OnCheckedChangeListener{
 
     private RecyclerView cardRecyclerView;
     private String deckName;
@@ -40,6 +40,7 @@ public class DeckEditActivity extends AppCompatActivity {
     private HashMap<String, Integer> cardList;
     private ActionBar actionbar;
     private RadioGroup cardLevelRadioGroup;
+    private boolean isSecondClick = false;
     private EditText searchBar;
     private CheckBox isCareerCheckbox;
     private CheckBox isCommonCheckbox;
@@ -94,6 +95,7 @@ public class DeckEditActivity extends AppCompatActivity {
 
     private void _init(){
         cardLevelRadioGroup = (RadioGroup)findViewById(R.id.cardLevel);
+        setRadioDefaultClickListener();
         searchBar = (EditText)findViewById(R.id.SearchBar);
         isCareerCheckbox = (CheckBox)findViewById(R.id.isCareer);
         isCommonCheckbox = (CheckBox)findViewById(R.id.isCommon);
@@ -125,6 +127,34 @@ public class DeckEditActivity extends AppCompatActivity {
         String SQL = getSQL();
         _createCards(SQL);
     }
+
+    private void setRadioDefaultClickListener(){
+        cardLevelRadioGroup.setOnCheckedChangeListener(this);
+        int count = cardLevelRadioGroup.getChildCount();
+
+        for(int i = 0 ; i< count ; i++){
+            RadioButton radioButton = (RadioButton)cardLevelRadioGroup.getChildAt(i);
+            radioButton.setOnClickListener(this);
+        }
+
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        isSecondClick = false;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(isSecondClick){
+            cardLevelRadioGroup.clearFocus();
+            cardLevelRadioGroup.clearCheck();
+        }else{
+            isSecondClick = true;
+        }
+    }
+
+
 
     private String getSQL() {
         int checkedLevelId = cardLevelRadioGroup.getCheckedRadioButtonId();
@@ -262,9 +292,8 @@ public class DeckEditActivity extends AppCompatActivity {
         dialog.show(this.getFragmentManager(), "saveCardListFragmentDialog");
     }
 
-    public int addCardList(String key){
+    public int addCardList(String cardId){
 
-        //TODO 確認是否傳說
         // >29 return
         int deckCardAmount = getCardAmount();
         if(deckCardAmount > 29){
@@ -272,23 +301,40 @@ public class DeckEditActivity extends AppCompatActivity {
         }
 
         //isExist -> add
-        boolean exist = cardList.containsKey(key);
+        boolean exist = cardList.containsKey(cardId);
 
         if(exist){
-            int cardAmount = cardList.get(key);
+            int cardAmount = cardList.get(cardId);
             if(cardAmount > 1){
                 return cardAmount;
             }
 
-            cardList.remove(key);
+            if(isLegend(cardId)){
+                return cardAmount;
+            }
+
+            cardList.remove(cardId);
             cardAmount = cardAmount +1 ;
-            cardList.put(key, cardAmount);
+            cardList.put(cardId, cardAmount);
             return cardAmount;
         }
 
         int defaultAmount = 1 ;
-        cardList.put(key, defaultAmount);
+        cardList.put(cardId, defaultAmount);
         return defaultAmount;
+    }
+
+    private boolean isLegend(String cardId){
+        SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this);
+        SQLiteDatabase DB = DeckToolDatabaseHelper.getReadableDatabase();
+        String SQL =  "select * from card where id = '"+cardId+"'";
+        Cursor cursor = DB.rawQuery(SQL, null);
+        cursor.moveToNext();
+        String cardType = cursor.getString(5);
+        if("傳說".equals(cardType)){
+            return true;
+        }
+        return false;
     }
 
   /***

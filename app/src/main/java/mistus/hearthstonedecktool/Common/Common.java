@@ -83,4 +83,29 @@ public class Common {
                 return "普通";
         }
     }
+
+    public static String getCareerEnglishName(int careerId){
+        switch (careerId){
+            case Common.warrior:
+                return "warrior";
+            case Common.shaman:
+                return "shaman";
+            case Common.rogue:
+                return "rogue";
+            case Common.paladin:
+                return "paladin";
+            case Common.hunter:
+                return "hunter";
+            case Common.druid:
+                return "druid";
+            case Common.warlock:
+                return "warlock";
+            case Common.mage:
+                return "mage";
+            case Common.priest:
+                return "priest";
+            default:
+                return "普通";
+        }
+    }
 }
