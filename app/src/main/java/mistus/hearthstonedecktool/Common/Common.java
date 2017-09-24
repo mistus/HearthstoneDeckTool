@@ -32,4 +32,55 @@ public class Common {
     public static final String[] standardSeries =
             {"基本","經典","古神碎碎念","加基森風雲","安戈洛歷險記","夜夜卡拉贊"};
 
+
+    public int getCareerNameId(String careerName){
+        switch (careerName){
+            case "戰士":
+                return Common.warrior;
+            case "薩滿":
+                return Common.shaman;
+            case "盜賊":
+                return Common.rogue;
+            case "聖騎士":
+                return Common.paladin;
+            case "獵人":
+                return Common.hunter;
+            case "德魯伊":
+                return Common.druid;
+            case "術士":
+                return Common.warlock;
+            case "法師":
+                return Common.mage;
+            case "牧師":
+                return Common.priest;
+            default:
+                return 0;
+        }
+    }
+
+
+    public static String getCareerNameById(int careerId){
+        switch (careerId){
+            case Common.warrior:
+                return "戰士";
+            case Common.shaman:
+                return "薩滿";
+            case Common.rogue:
+                return "盜賊";
+            case Common.paladin:
+                return "聖騎士";
+            case Common.hunter:
+                return "獵人";
+            case Common.druid:
+                return "德魯伊";
+            case Common.warlock:
+                return "術士";
+            case Common.mage:
+                return "法師";
+            case Common.priest:
+                return "牧師";
+            default:
+                return "普通";
+        }
+    }
 }

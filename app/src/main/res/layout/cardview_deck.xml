@@ -22,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:id="@+id/careerImageView"
             android:src="@drawable/warrior"/>
         <TextView
             android:layout_weight="8"
