@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,9 +18,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.view.Menu;
-
 import java.util.HashMap;
-
 import mistus.hearthstonedecktool.CardView.Card.CardRecycleViewAdapter;
 import mistus.hearthstonedecktool.Common.Common;
 import mistus.hearthstonedecktool.Database.DeckToolDatabaseHelper;
@@ -65,7 +62,7 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
     public void setDeckName(String deckName) {
         this.deckName = deckName;
     }
-    private RecyclerView DeckListDetailRecycler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +80,7 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.deckDetailIcon:
-                _open_deck_detail_button_event();
+                _openDeckDetailButtonEvent();
                 return true;
             case R.id.deckSaveIcon:
                 _saveDeckButtonEvent();
@@ -93,17 +90,20 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * 初期化
+     */
     private void _init(){
         cardLevelRadioGroup = (RadioGroup)findViewById(R.id.cardLevel);
-        setRadioDefaultClickListener();
+        setRadioButtonClickListener();
         searchBar = (EditText)findViewById(R.id.SearchBar);
         isCareerCheckbox = (CheckBox)findViewById(R.id.isCareer);
         isCommonCheckbox = (CheckBox)findViewById(R.id.isCommon);
         decideButton = (Button)findViewById(R.id.decide);
         actionbar = getSupportActionBar();
 
+        //前頁のデーターをセットする
         Intent intent = getIntent();
-
         cardList = (HashMap)intent.getSerializableExtra("cardList");
         if (cardList==null){
            cardList = new HashMap<String, Integer>();
@@ -123,12 +123,15 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        DeckListDetailRecycler = (RecyclerView)findViewById(R.id.deck_list_recycler);
         String SQL = getSQL();
         _createCards(SQL);
     }
 
-    private void setRadioDefaultClickListener(){
+    /**
+     * RadioButtonのonClickListenerを初期化
+     * //TODO メソッドの名前を考えて直しましょう
+     */
+    private void setRadioButtonClickListener(){
         cardLevelRadioGroup.setOnCheckedChangeListener(this);
         int count = cardLevelRadioGroup.getChildCount();
 
@@ -136,7 +139,6 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
             RadioButton radioButton = (RadioButton)cardLevelRadioGroup.getChildAt(i);
             radioButton.setOnClickListener(this);
         }
-
     }
 
     @Override
@@ -154,8 +156,10 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-
+    /**
+     * カード検索SQLを取得する
+     * @return String
+     */
     private String getSQL() {
         int checkedLevelId = cardLevelRadioGroup.getCheckedRadioButtonId();
         RadioButton levelRadioButton = (RadioButton)cardLevelRadioGroup.findViewById(checkedLevelId);
@@ -216,19 +220,25 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         return SQL;
     }
 
+    /**
+     * 検索ボタンクリック事件
+     */
     private void _decideClickEvent(){
         searchBar.clearFocus();
         String SQL = getSQL();
         _createCards(SQL);
     }
 
+    /**
+     * CardViewを生成する
+     * @param SQL
+     */
     private void _createCards(String SQL){
         cardRecyclerView = (RecyclerView)findViewById(R.id.card_recycler);
 
         SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this);
         SQLiteDatabase DB = DeckToolDatabaseHelper.getReadableDatabase();
-        //TODO change SQL
-//        Cursor cursor = DB.rawQuery("select * from card",null);
+
         Cursor cursor = DB.rawQuery(SQL, null);
         int count = cursor.getCount();
         int[] ids = new int[count] ;
@@ -250,6 +260,11 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         cardRecyclerView.setAdapter(adapter);
     }
 
+    /**
+     * 職業IDを返す
+     * @param CareerName
+     * @return int
+     */
     private int _getCareerNameId(String CareerName){
         switch (CareerName){
             case "戰士":
@@ -275,7 +290,10 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void _open_deck_detail_button_event(){
+    /**
+     * カードリストDialogを表示する
+     */
+    private void _openDeckDetailButtonEvent(){
         DialogFragment dialog = new deck_list_detail_fragment_dialog();
         Bundle bundle = new Bundle();
         bundle.putSerializable("cardList",cardList);
@@ -283,6 +301,9 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         dialog.show(this.getFragmentManager(), "deck_list_detail_fragment_dialog");
     }
 
+    /**
+     * セーフDialogを表示する
+     */
     private void _saveDeckButtonEvent(){
         DialogFragment dialog = new saveCardListFragmentDialog();
         Bundle bundle = new Bundle();
@@ -292,11 +313,17 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         dialog.show(this.getFragmentManager(), "saveCardListFragmentDialog");
     }
 
+    /**
+     * 指定カードを一つ増えて、更新後の数を返す
+     * @param cardId
+     * @return int
+     */
     public int addCardList(String cardId){
 
         // >29 return
         int deckCardAmount = getCardAmount();
         if(deckCardAmount > 29){
+            //追加失敗
             return -1;
         }
 
@@ -324,6 +351,11 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         return defaultAmount;
     }
 
+    /**
+     * 伝説カードかどうか
+     * @param cardId
+     * @return boolean
+     */
     private boolean isLegend(String cardId){
         SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this);
         SQLiteDatabase DB = DeckToolDatabaseHelper.getReadableDatabase();
@@ -337,37 +369,41 @@ public class DeckEditActivity extends AppCompatActivity implements View.OnClickL
         return false;
     }
 
-  /***
-     * 刪除卡片
-     * @param  key
+    /**
+     * 指定カードを削除して、更新後の数を返す
+     * @param cardId
+     * @return int
      */
-    public int removeCardList(String key){
+    public int removeCardList(String cardId){
 
-        boolean exist = cardList.containsKey(key);
+        boolean exist = cardList.containsKey(cardId);
         if(!exist){
             return -1;
         }
 
-        int cardAmount = cardList.get(key);
+        int cardAmount = cardList.get(cardId);
         if(cardAmount > 1){
             cardAmount = cardAmount - 1;
-            cardList.remove(key);
-            cardList.put(key, cardAmount);
+            cardList.remove(cardId);
+            cardList.put(cardId, cardAmount);
             return cardAmount;
         }else{
-            cardList.remove(key);
+            cardList.remove(cardId);
             return 0;
         }
     }
 
+    /**
+     * デッキの数を返す
+     * @return int
+     */
     public int getCardAmount(){
-        int cardAmount = 0;
+        int deckAmount = 0;
 
         for(HashMap.Entry card : cardList.entrySet()){
-            int amount = (int)card.getValue();
-
-            cardAmount = cardAmount + amount;
+            int cardAmount = (int)card.getValue();
+            deckAmount = deckAmount + cardAmount;
         }
-        return cardAmount;
+        return deckAmount;
     }
 }

@@ -19,12 +19,18 @@ public class savePlayerDeckList {
     private int amount;
     private HashMap<String, Integer> cardList;
 
+    /**
+     * @param context
+     */
     public savePlayerDeckList(Context context) {
         _init(context);
     }
-
     public savePlayerDeckList() {
     }
+
+    /**
+     * 現有デッキを削除し、も一度保存する
+     */
     public void saveDeck(){
         String SQL = "select * from player_decks where deckName = '" +deckName+"'";
         Cursor cursor = DB.rawQuery(SQL, null);
@@ -37,10 +43,17 @@ public class savePlayerDeckList {
         _insertDeck(this.deckName, this.deckType, this.job, this.amount, this.cardList);
     }
 
+    /**
+     * @param DB
+     */
     public void setDB(SQLiteDatabase DB) {
         this.DB = DB;
     }
 
+    /**
+     * 初期化する
+     * @param context
+     */
     private void _init(Context context){
         this.DeckEditActivity = (DeckEditActivity)context;
         SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this.DeckEditActivity);
@@ -53,6 +66,15 @@ public class savePlayerDeckList {
         this.cardList = DeckEditActivity.getCardList();
 
     }
+
+    /**
+     * デッキ記録する(PlayerDeck、PlayerDeckCardList)
+     * @param deckName
+     * @param deckType
+     * @param job
+     * @param amount
+     * @param cardList
+     */
     private void _insertDeck(String deckName, String deckType, int job, int amount
             , HashMap<String, Integer> cardList){
 
@@ -60,11 +82,23 @@ public class savePlayerDeckList {
         _insertPlayerDeckCardList(deckId, cardList);
     }
 
+    /**
+     * デッキ削除(PlayerDeck、PlayerDeckCardList)
+     * @param deckName
+     */
     public void _deleteDeck(String deckName){
         _deletePlayerDeckCardList(getDeckIdByDeckName(deckName));
         _deleteDeckCards(deckName);
     }
 
+    /**
+     * デッキを記録する
+     * @param deckName
+     * @param deckType
+     * @param job
+     * @param amount
+     * @return deckId
+     */
     private int  _insertPlayerDeck(String deckName, String deckType, int job, int amount){
         ContentValues insertData = new ContentValues();
         insertData.put("deckName", deckName);
@@ -78,6 +112,11 @@ public class savePlayerDeckList {
         return deckId;
     }
 
+    /**
+     * デッキのカードリストを記録する
+     * @param deckId
+     * @param cardList
+     */
     private void _insertPlayerDeckCardList(int deckId, HashMap<String, Integer> cardList){
         for(HashMap.Entry card : cardList.entrySet()){
             ContentValues insertData = new ContentValues();
@@ -87,6 +126,12 @@ public class savePlayerDeckList {
             DB.insert("player_deck_card_lists"  ,null, insertData);
         }
     }
+
+    /**
+     * デッキを削除する
+     * @param deckName
+     * @return isSuccess
+     */
     private boolean _deleteDeckCards(String deckName){
         String table = "player_decks";
         String whereClause = "deckName=?";
@@ -94,6 +139,11 @@ public class savePlayerDeckList {
         return DB.delete(table, whereClause, whereArgs) > 0;
     }
 
+    /**
+     * デッキのカードリストを削除する
+     * @param deckId
+     * @return isSuccess
+     */
     private boolean _deletePlayerDeckCardList(int deckId){
         String table = "player_deck_card_lists";
         String whereClause = "deckId=?";
@@ -101,6 +151,10 @@ public class savePlayerDeckList {
         return DB.delete(table, whereClause, whereArgs) > 0;
     }
 
+    /**
+     * @param deckName
+     * @return deckId
+     */
     private int getDeckIdByDeckName(String deckName){
         String SQL = "select * from player_decks where deckName = '" + deckName+"'";
         Cursor cursor = DB.rawQuery(SQL, null);
