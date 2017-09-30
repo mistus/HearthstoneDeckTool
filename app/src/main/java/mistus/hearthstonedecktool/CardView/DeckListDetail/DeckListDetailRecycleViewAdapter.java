@@ -62,6 +62,9 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
             }
         }
 
+        /**
+         * 追加ボタン事件
+         */
         private void addButtonEvent(){
             int newAmount  = ((DeckEditActivity)context).addCardList(Integer.toString((int)addButton.getTag()));
             ((deck_list_detail_fragment_dialog)contextDialogFragment).renewCardAmount();
@@ -79,6 +82,10 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
             }
             ((deck_list_detail_fragment_dialog) contextDialogFragment).renewGraph();
         }
+
+        /**
+         * 削除ボタン事件
+         */
         private void removeButtonEvent(){
             int newAmount  = ((DeckEditActivity)context).removeCardList(Integer.toString((int)deleteButton.getTag()));
             ((deck_list_detail_fragment_dialog)contextDialogFragment).renewCardAmount();
@@ -135,6 +142,10 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         return cardName.length;
     }
 
+    /**
+     * 指定カードを削除する
+     * @param position
+     */
     public void removeAt(int position) {
         int length = getItemCount () - 1 ;
         String newCardName[] = new String[length];
@@ -159,20 +170,17 @@ public class DeckListDetailRecycleViewAdapter extends RecyclerView.Adapter<DeckL
         cardAmount = newCardAmount;
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, length);
-
     }
 
+    /**
+     * 指定カードの数を更新する
+     * @param position
+     * @param amount
+     */
     public void setCardAmount(int position, int amount){
         cardAmount[position] = amount;
         notifyItemChanged(position);
         notifyDataSetChanged();
     }
 
-    public void checkCardAmount(){
-        int leg = getItemCount();
-        for(int i = 0; i<leg ; i++){
-            Log.e("cardName",cardName[i]);
-            Log.e("cardAmount",Integer.toString(cardAmount[i]));
-        }
-    }
 }

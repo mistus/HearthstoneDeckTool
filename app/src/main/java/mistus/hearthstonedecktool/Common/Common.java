@@ -32,7 +32,10 @@ public class Common {
     public static final String[] standardSeries =
             {"基本","經典","古神碎碎念","加基森風雲","安戈洛歷險記","夜夜卡拉贊"};
 
-
+    /**
+     * @param careerName
+     * @return
+     */
     public int getCareerNameId(String careerName){
         switch (careerName){
             case "戰士":
@@ -84,6 +87,10 @@ public class Common {
         }
     }
 
+    /**
+     * @param careerId
+     * @return String
+     */
     public static String getCareerEnglishName(int careerId){
         switch (careerId){
             case Common.warrior:

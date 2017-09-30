@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -78,6 +77,10 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
             }
         }
 
+        /**
+         * デッキ削除ダイアログを表示する
+         * @return Dialog
+         */
         private Dialog _createDeleteDialog(){
             Builder builder = new android.app.AlertDialog.Builder(context);
             builder.setMessage("要刪除卡組嗎?");
@@ -94,6 +97,9 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
             return builder.create();
         }
 
+        /**
+         * デッキを削除する
+         */
         private void _deleteDeck(){
             savePlayerDeckList savePlayerDeckList = new savePlayerDeckList();
             DeckListActivity DeckListActivity = (DeckListActivity)context;
@@ -102,6 +108,9 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
             DeckListActivity.renewDeckArray();
         }
 
+        /**
+         * card edit page を作成して遷移する
+         */
         private void _createEditPage(){
             Intent intent = new Intent();
             intent.setClass(context, DeckEditActivity.class);
@@ -111,31 +120,42 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
             bundle.putString("deckName",deckNameView.getText().toString());
             bundle.putString("TypeName",_getTypeName(deckTypeView.getText().toString()));
 
-            HashMap<String, Integer> cardList = new HashMap<String, Integer>();
-            cardList = _getCardList(deckTypeView.getText().toString());
+            HashMap<String, Integer> cardList;
+            cardList = _getCardList(deckId[getAdapterPosition()]);
             bundle.putSerializable("cardList",cardList);
             intent.putExtras(bundle);
             context.startActivity(intent);
         }
 
-        private HashMap<String, Integer> _getCardList(String TypeName){
+        /**
+         * カードリストを返す
+         * @param deckId
+         * @return
+         */
+        private HashMap<String, Integer> _getCardList(int deckId){
             HashMap<String, Integer> cardList = new HashMap<String, Integer>();
 
             SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(context);
             SQLiteDatabase DB = DeckToolDatabaseHelper.getReadableDatabase();
 
-            String SQL = "select * from player_deck_card_lists where deckId = '"+deckId[getAdapterPosition()]+"'";
+            String SQL = "select * from player_deck_card_lists where deckId = '"+deckId+"'";
             Cursor cursor = DB.rawQuery(SQL, null);
             int count = cursor.getCount();
 
             for(int i=0; i < count; i++){
                 cursor.moveToNext();
+                //ID, AMOUNT
                 cardList.put(Integer.toString(cursor.getInt(2)),cursor.getInt(3));
             }
 
             return cardList;
         }
 
+        /**
+         * デッキタイプを返す
+         * @param TypeName
+         * @return
+         */
         private String _getTypeName(String TypeName){
             if(TypeName == "Standard"){
                 return "標準";
@@ -143,8 +163,6 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
             return "開放";
         }
     }
-
-
 
     @Override
     public DeckRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -178,6 +196,11 @@ public class DeckRecyclerViewAdapter extends RecyclerView.Adapter<DeckRecyclerVi
         return deckName.length;
     }
 
+    /**
+     * デッキタイプを返す
+     * @param isStandardType
+     * @return
+     */
     private String getDeckTypeName(boolean isStandardType){
         if(isStandardType){
             return "Standard";

@@ -66,6 +66,9 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         return builder.create();
     }
 
+    /**
+     * 初期化する
+     */
     private void _init(){
         LayoutInflater inflater = getActivity().getLayoutInflater();
         view  = inflater.inflate(R.layout.dialogview_deck_detail, null);
@@ -95,11 +98,16 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         _createGraph();
     }
 
+    /**
+     * レベルグラフを更新する
+     */
     public void renewGraph(){
-//        _createDeckListDetailCardview();
         _createGraph();
     }
 
+    /**
+     * レベルグラフを生成する
+     */
     private void _createGraph(){
         int[] levelCounter = _getLevelCounter(levelList);
         int largestLevelAmount= _getLargestLevelAmount(levelCounter);
@@ -147,6 +155,12 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         levelSevenPlusBlank.setLayoutParams(params);
 
     }
+
+    /**
+     * カードリストのレベル配列を取得する
+     * @param levelList
+     * @return levelCounter
+     */
     private int[] _getLevelCounter(int[] levelList){
         int[] levelCounter = new int[]{0,0,0,0,0,0,0,0};
 
@@ -165,6 +179,12 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
 
         return levelCounter;
     }
+
+    /**
+     * デッキの最高レベルを取得する
+     * @param levelList
+     * @return int
+     */
     private int _getLargestLevelAmount(int[] levelList){
         int largestLevelAmount = 0;
 
@@ -180,6 +200,9 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         return largestLevelAmount;
     }
 
+    /**
+     * Cardviewを生成する
+     */
     private void _createDeckListDetailCardview (){
 
         if(cardList.isEmpty()){
@@ -224,6 +247,9 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         DeckListDetailRecycler.setAdapter(adapter);
     }
 
+    /**
+     * デッキの数を更新する
+     */
     public void renewCardAmount(){
         Context context = getActivity();
         int cardAmount = ((DeckEditActivity)context).getCardAmount();
@@ -242,7 +268,7 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
     }
 
     /***
-     * カードの数を削除する
+     * カードの数を減る
      * @int position
      */
     public void removeCardAmount(int position){
@@ -258,6 +284,10 @@ public class deck_list_detail_fragment_dialog extends DialogFragment{
         }
     }
 
+    /**
+     * 指定カードを削除する
+     * @param position
+     */
     public void removeAt(int position) {
         int length = nameList.length - 1 ;
         String newNameList[] = new String[length];

@@ -49,16 +49,28 @@ public class DeckListActivity extends AppCompatActivity {
         _init();
     }
 
+    /**
+     * 初期化
+     */
     private void _init(){
         SQLiteOpenHelper DeckToolDatabaseHelper = new DeckToolDatabaseHelper(this);
         this.DB = DeckToolDatabaseHelper.getReadableDatabase();
         renewDeckArray();
     }
 
+    /**
+     * デッキ追加ボタンイベント
+     */
     private void _add_deck_button_event(){
         DialogFragment dialog = new choose_career_fragment_dialog();
         dialog.show(this.getFragmentManager(), "choose_career_fragment_dialog");
    }
+
+    /**
+     * 標準タイプかどうか
+     * @param deckType
+     * @return boolean
+     */
     private boolean isStandardType(String deckType){
         switch (deckType){
             case "標準":
@@ -68,6 +80,9 @@ public class DeckListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * set cardView Recycler Adapter
+     */
     private void setAdapter(){
         DeckRecyclerViewAdapter adapter = new DeckRecyclerViewAdapter(
                 deckId, deckName, job, isStandardType, Quantity, this);
@@ -77,6 +92,9 @@ public class DeckListActivity extends AppCompatActivity {
         DeckRecycler.setAdapter(adapter);
     }
 
+    /**
+     * デッキリストを再生成する
+     */
     public void renewDeckArray(){
         String SQL = "select * from player_decks order by id desc";
         Cursor cursor = DB.rawQuery(SQL, null);
