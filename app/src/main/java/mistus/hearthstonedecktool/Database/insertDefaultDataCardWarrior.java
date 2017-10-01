@@ -111,19 +111,24 @@ public class insertDefaultDataCardWarrior {
         insert(16003, "海劫者",           Common.levelSix, Common.warrior, "當你抽到這張牌，對你 全部手下造成1點傷害",                     "史詩", "銀白聯賽");
         insert(16004, "暴躁的恐角龍",     Common.levelSix, Common.warrior, "野獸,嘲諷 戰吼：演化",                                         "普通", "安戈洛歷險記");
 
-        //Level7+
+        //Level7
         insert(17001, "血吼之斧",                 Common.levelSevenPlus, Common.warrior, "武器,攻擊手下會降低1點攻擊力，而非1點耐久度",                     "史詩", "經典");
-        insert(17002, "葛羅瑪許·地獄吼",          Common.levelSevenPlus, Common.warrior, "衝鋒。 狂怒：+6攻擊力",                                           "傳說", "經典");
-        insert(17003, "粉碎",                     Common.levelSevenPlus, Common.warrior, "摧毀一個手下。若你有受傷的手下在場上，消耗減少(4)點",             "史詩", "哥哥打地地");
-        insert(17004, "瓦里安‧烏瑞恩",            Common.levelSevenPlus, Common.warrior, "戰吼：抽3張牌 你抽到的手下會直接進入戰場",                        "傳說", "銀白聯賽");
-        insert(17005, "黑曜石毀滅者",             Common.levelSevenPlus, Common.warrior, "在你的回合結束時，召喚一隻有嘲諷的1/1聖甲蟲",                     "普通", "探險者協會");
-        insert(17006, "馬可羅克",                 Common.levelSevenPlus, Common.warrior, "戰吼：裝備一把隨機武器",                                          "傳說", "古神碎碎念");
-        insert(17007, "上古執盾兵",               Common.levelSevenPlus, Common.warrior, "戰吼：如果你的克蘇恩有10點以上的攻擊力，獲得10點護甲值",          "精良", "古神碎碎念");
-        insert(17008, "焦油首領",                 Common.levelSevenPlus, Common.warrior, "元素,嘲諷 在對手的回合獲得 +4攻擊力",                             "普通", "安戈洛歷險記");
-        insert(17009, "暴龍之王莫什",             Common.levelSevenPlus, Common.warrior, "野獸,戰吼：摧毀全部 受傷的手下",                                  "傳說", "安戈洛歷險記");
-        insert(17010, "腐臉",                     Common.levelSevenPlus, Common.warrior, "每當此手下受傷後 存活，召喚一個隨機傳說手下",                     "傳說", "冰封王座");
-        insert(17011, "『天譴領主』卡爾洛斯",     Common.levelSevenPlus, Common.warrior, "英雄,戰吼：裝備一把 4/3的影之哀傷，它可以同時傷害目標兩側的手下", "傳說", "冰封王座");
+        insert(17002, "粉碎",                     Common.levelSevenPlus, Common.warrior, "摧毀一個手下。若你有受傷的手下在場上，消耗減少(4)點",             "史詩", "哥哥打地地");
+        insert(17003, "黑曜石毀滅者",             Common.levelSevenPlus, Common.warrior, "在你的回合結束時，召喚一隻有嘲諷的1/1聖甲蟲",                     "普通", "探險者協會");
+        insert(17004, "馬可羅克",                 Common.levelSevenPlus, Common.warrior, "戰吼：裝備一把隨機武器",                                          "傳說", "古神碎碎念");
+        insert(17005, "上古執盾兵",               Common.levelSevenPlus, Common.warrior, "戰吼：如果你的克蘇恩有10點以上的攻擊力，獲得10點護甲值",          "精良", "古神碎碎念");
+        insert(17006, "焦油首領",                 Common.levelSevenPlus, Common.warrior, "元素,嘲諷 在對手的回合獲得 +4攻擊力",                             "普通", "安戈洛歷險記");
 
+        //Level8
+        insert(18001, "葛羅瑪許·地獄吼",          Common.levelSevenPlus, Common.warrior, "衝鋒。 狂怒：+6攻擊力",                                           "傳說", "經典");
+        insert(18002, "腐臉",                     Common.levelSevenPlus, Common.warrior, "每當此手下受傷後 存活，召喚一個隨機傳說手下",                     "傳說", "冰封王座");
+        insert(18003, "『天譴領主』卡爾洛斯",     Common.levelSevenPlus, Common.warrior, "英雄,戰吼：裝備一把 4/3的影之哀傷，它可以同時傷害目標兩側的手下", "傳說", "冰封王座");
+
+        //Level9
+        insert(19001, "暴龍之王莫什",             Common.levelSevenPlus, Common.warrior, "野獸,戰吼：摧毀全部 受傷的手下",                                  "傳說", "安戈洛歷險記");
+
+        //Level10
+        insert(110001, "瓦里安‧烏瑞恩",            Common.levelSevenPlus, Common.warrior, "戰吼：抽3張牌 你抽到的手下會直接進入戰場",                        "傳說", "銀白聯賽");
 
     }
 
