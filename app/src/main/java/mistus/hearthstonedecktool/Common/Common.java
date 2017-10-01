@@ -20,7 +20,7 @@ public class Common {
     public static final int levelFour = 4;
     public static final int levelFive = 5;
     public static final int levelSix = 6;
-    public static final int levelSeven = 7;
+    public static final int levelSevenPlus = 7;
 
     //Type
     public static final String typeOpen = "開放";
@@ -28,9 +28,9 @@ public class Common {
 
     //Series
     public static final String[] openSeries =
-            {"哥哥打地地","銀白聯賽","納克薩瑪斯","勇闖黑石山","探險者協會","名人堂","獎勵","促銷"};
+            {"納克薩瑪斯","哥哥打地地","銀白聯賽","勇闖黑石山","探險者協會","名人堂","獎勵","促銷"};
     public static final String[] standardSeries =
-            {"基本","經典","古神碎碎念","加基森風雲","安戈洛歷險記","夜夜卡拉贊"};
+            {"基本","經典","古神碎碎念","夜夜卡拉贊","加基森風雲","安戈洛歷險記","夜夜卡拉贊","冰封王座"};
 
     /**
      * @param careerName
