@@ -43,8 +43,18 @@ public class DeckToolDatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(createTableCard);
         sqLiteDatabase.execSQL(createTablePlayerDecks);
         sqLiteDatabase.execSQL(createTablePlayerDeckCardLists);
+
+        //insertWarrior
         insertDefaultDataCardWarrior insertWarrior = new insertDefaultDataCardWarrior(sqLiteDatabase);
         insertWarrior.insertDefaultData();
+
+        //insertRogue
+        insertDefaultDataCardRogue insertRogue = new insertDefaultDataCardRogue(sqLiteDatabase);
+        insertRogue.insertDefaultData();
+
+        //insertPaladin
+        insertDefaultDataCardPaladin insertPaladin = new insertDefaultDataCardPaladin(sqLiteDatabase);
+        insertPaladin.insertDefaultData();
     }
 
     @Override
