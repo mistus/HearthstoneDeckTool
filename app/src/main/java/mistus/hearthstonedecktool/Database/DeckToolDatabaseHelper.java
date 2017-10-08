@@ -55,6 +55,10 @@ public class DeckToolDatabaseHelper extends SQLiteOpenHelper {
         //insertPaladin
         insertDefaultDataCardPaladin insertPaladin = new insertDefaultDataCardPaladin(sqLiteDatabase);
         insertPaladin.insertDefaultData();
+
+        //insertHunter
+        insertDefaultDataCardHunter insertHunter = new insertDefaultDataCardHunter(sqLiteDatabase);
+        insertHunter.insertDefaultData();
     }
 
     @Override
