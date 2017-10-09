@@ -115,7 +115,6 @@ public class insertDefaultDataCardHunter {
         insertData.put("series", series);
 
         DB.insert("card"  ,null, insertData);
-
     }
 
 }

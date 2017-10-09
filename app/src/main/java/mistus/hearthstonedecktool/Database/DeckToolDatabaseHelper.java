@@ -59,6 +59,16 @@ public class DeckToolDatabaseHelper extends SQLiteOpenHelper {
         //insertHunter
         insertDefaultDataCardHunter insertHunter = new insertDefaultDataCardHunter(sqLiteDatabase);
         insertHunter.insertDefaultData();
+
+        //insertDruid
+        insertDefaultDataCardDruid insertDruid = new insertDefaultDataCardDruid(sqLiteDatabase);
+        insertDruid.insertDefaultData();
+
+        //insertWarlock
+        insertDefaultDataCardWarlock insertWarlock = new insertDefaultDataCardWarlock(sqLiteDatabase);
+        insertWarlock.insertDefaultData();
+
+
     }
 
     @Override

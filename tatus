@@ -1,0 +1,35 @@
+warning: LF will be replaced by CRLF in .idea/vcs.xml.
+The file will have its original line endings in your working directory.
+[1mdiff --git a/app/src/main/java/mistus/hearthstonedecktool/Database/DeckToolDatabaseHelper.java b/app/src/main/java/mistus/hearthstonedecktool/Database/DeckToolDatabaseHelper.java[m
+[1mindex 91321bb..23a4c90 100644[m
+[1m--- a/app/src/main/java/mistus/hearthstonedecktool/Database/DeckToolDatabaseHelper.java[m
+[1m+++ b/app/src/main/java/mistus/hearthstonedecktool/Database/DeckToolDatabaseHelper.java[m
+[36m@@ -60,9 +60,15 @@[m [mpublic class DeckToolDatabaseHelper extends SQLiteOpenHelper {[m
+         insertDefaultDataCardHunter insertHunter = new insertDefaultDataCardHunter(sqLiteDatabase);[m
+         insertHunter.insertDefaultData();[m
+ [m
+[31m-        //insertHunter[m
+[32m+[m[32m        //insertDruid[m
+         insertDefaultDataCardDruid insertDruid = new insertDefaultDataCardDruid(sqLiteDatabase);[m
+         insertDruid.insertDefaultData();[m
+[32m+[m
+[32m+[m[32m        //insertWarlock[m
+[32m+[m[32m        insertDefaultDataCardWarlock insertWarlock = new insertDefaultDataCardWarlock(sqLiteDatabase);[m
+[32m+[m[32m        insertWarlock.insertDefaultData();[m
+[32m+[m
+[32m+[m
+     }[m
+ [m
+     @Override[m
+[1mdiff --git a/app/src/main/java/mistus/hearthstonedecktool/Database/insertDefaultDataCardHunter.java b/app/src/main/java/mistus/hearthstonedecktool/Database/insertDefaultDataCardHunter.java[m
+[1mindex 4622c55..5dac2eb 100644[m
+[1m--- a/app/src/main/java/mistus/hearthstonedecktool/Database/insertDefaultDataCardHunter.java[m
+[1m+++ b/app/src/main/java/mistus/hearthstonedecktool/Database/insertDefaultDataCardHunter.java[m
+[36m@@ -115,7 +115,6 @@[m [mpublic class insertDefaultDataCardHunter {[m
+         insertData.put("series", series);[m
+ [m
+         DB.insert("card"  ,null, insertData);[m
+[31m-[m
+     }[m
+ [m
+ }[m
